@@ -8,7 +8,7 @@ interface Spinnerinterface{
 function Spinner({loadingState}:Spinnerinterface){
    const {setLaoding} = useSetLoading() 
     useEffect(()=>{
-        setLaoding(loadingState)
+        setLaoding(loadingState?true:false)
     },[loadingState])
 
     return null

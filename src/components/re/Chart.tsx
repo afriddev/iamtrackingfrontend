@@ -1,6 +1,4 @@
-
-import { dark } from "@mui/material/styles/createPalette";
-import { BarChart, pieArcLabelClasses, PieChart } from "@mui/x-charts";
+import { pieArcLabelClasses, PieChart } from "@mui/x-charts";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../utils/AppContext";
 import { SAVINGS, TODAY_LIMIT, TODAY_SPENDS } from "../../utils/constants";
@@ -21,32 +19,42 @@ function Chart({ type }: ChartInterface) {
 
   useEffect(() => {
     handlePageIndexChange();
-  }, [pageIndex,userData]);
+  }, [pageIndex, userData]);
 
   function handlePageIndexChange() {
     switch (pageIndex) {
       case 0: {
-        setPieData([
-          {
-            id: 0,
-            value: userData?.dailyLimit,
-            label: TODAY_LIMIT,
-            color: "#7600b5",
-          },
-          {
-            id:1,
+        const temp: {
+          id: number;
+          value: number;
+          label: string;
+          color?: string;
+        }[] = [];
+        temp.push({
+          id: 0,
+          value: userData?.dailyLimit,
+          label: TODAY_LIMIT,
+          color: "#7600b5",
+        });
+        if (todaySpendAmount > 1) {
+          temp.push({
+            id: 1,
             value: todaySpendAmount,
             label: TODAY_SPENDS,
             color: "#55f540",
-          },
-          {
-            id:2,
-            value: (userData?.dailyLimit - todaySpendAmount) >= 0?(userData?.dailyLimit - todaySpendAmount):(userData?.dailyLimit - todaySpendAmount) * -1,
-            label: SAVINGS,
-            color:
-              todaySpendAmount >= userData?.dailyLimit ? "#f7746a" : "#55f540",
-          },
-        ]);
+          });
+        }
+        temp.push({
+          id: 2,
+          value:
+            userData?.dailyLimit - todaySpendAmount >= 0
+              ? userData?.dailyLimit - todaySpendAmount
+              : (userData?.dailyLimit - todaySpendAmount) * -1,
+          label: SAVINGS,
+          color:
+            todaySpendAmount >= userData?.dailyLimit ? "#f7746a" : "#55f540",
+        });
+        setPieData(temp);
         break;
       }
       default: {
@@ -56,10 +64,10 @@ function Chart({ type }: ChartInterface) {
   }
 
   return (
-    <div className="w-[97vw] h-[30vh]">
-      <div className="w-[97vw] drop-shadow-xl h-[30vh]">
+    <div className="h-[30vh] w-[97vw]">
+      <div className="h-[30vh] w-[97vw] drop-shadow-xl">
         <PieChart
-          className="w-[97vw] h-[30vh]"
+          className="h-[30vh] w-[97vw]"
           series={[
             {
               data: pieData,
@@ -70,21 +78,22 @@ function Chart({ type }: ChartInterface) {
               cx: 120,
               type: "pie",
               arcLabel: (item) => {
-                if(item?.id === 2 && (userData?.dailyLimit - todaySpendAmount) < 0){
-                   return `- ${item?.value}`
+                if (
+                  item?.id === 2 &&
+                  userData?.dailyLimit - todaySpendAmount < 0
+                ) {
+                  return `- ${item?.value}`;
                 }
-                return `+ ${item?.value}`
+                return `+ ${item?.value}`;
               },
-
-              
             },
           ]}
           sx={{
             [`& .${pieArcLabelClasses.root}`]: {
-              fill: 'white',
-              fontWeight: 'bold',
+              fill: "white",
+              fontWeight: "bold",
 
-              fontSize:"15px"
+              fontSize: "15px",
             },
           }}
         />

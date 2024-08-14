@@ -10,4 +10,5 @@ export const SPENDS = "Spends"
 export const LIMIT = "Limit"
 export const SET_MONTHLY_AMOUNT = "Please enter amount"
 export const MONTHLY_AMOUNT_ZERO_DISC = "Your monthly limit is currently set to zero. Please configure your monthly amount.";
-export const AMOOUNT_ERROR = "Please enter Amount"
+export const AMOOUNT_ERROR = "Wrong Amount!"
+export const MONTH_AMOUNT_LIMIT = "Please enter amount above 500"

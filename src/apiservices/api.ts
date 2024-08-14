@@ -1,7 +1,10 @@
 import axios from "axios";
 
+
+const BASE_URL = "https://trackmebackend.vercel.app/api/"
+
 function postAPI(url: string, data: any) {
-  return axios(`https://trackingme.vercel.app/api/${url}`, {
+  return axios(`${BASE_URL}${url}`, {
     method: "POST",
     data,
   });
@@ -18,4 +21,8 @@ export function updateProfileImageAPI(data: { emailId: string; url: string }) {
 }
 export function getUserDataAPI(emailId: string) {
   return postAPI("getuser", { emailId })
+}
+export function setMonthlyAmountAPI(data:{emailId:string,amount:number}){
+  return postAPI("setmonthlimit",data)
+
 }
