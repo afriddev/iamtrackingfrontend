@@ -1,4 +1,3 @@
-"use client";
 
 import { ReactNode, createContext, useContext, useReducer } from "react";
 import { userType } from "../types/userTypes";

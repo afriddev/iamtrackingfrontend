@@ -1,4 +1,3 @@
-"use client";
 import { useEffect } from "react";
 import { CiSaveUp1 } from "react-icons/ci";
 import { IoTrendingUpSharp } from "react-icons/io5";
