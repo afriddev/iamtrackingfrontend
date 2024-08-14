@@ -29,10 +29,11 @@ function HomePage({ setPageNumber }: HomePageInterface) {
       emailId: "369afrd@gmail.com",
     });
   }, []);
+  
+  if(isPending) return <Spinner loadingState={isPending}/> 
 
   return (
     <div className="px-2 py-2 ">
-      <Spinner loadingState={isPending} />
       <div className=" p-1">
         <NavBar setPageNumber={setPageNumber} />
       </div>

@@ -24,7 +24,6 @@ function ProfileIcon({ }: ProfileIconInerface) {
   function handleProfileClick() {
     document?.getElementById("FILE")?.click();
   }
-  console.log(userData)
 
 
 
