@@ -1,15 +1,9 @@
-"use client";
-import { useAppContext } from "@/app/utils/AppContext";
-import {
-  BALANCE,
-  SAVINGS,
-  TODAY_LIMIT,
-  TODAY_SPENDS,
-  TODAY_STATISTICS,
-} from "@/app/utils/constants";
+
 import { dark } from "@mui/material/styles/createPalette";
 import { BarChart, pieArcLabelClasses, PieChart } from "@mui/x-charts";
 import { useEffect, useState } from "react";
+import { useAppContext } from "../../utils/AppContext";
+import { SAVINGS, TODAY_LIMIT, TODAY_SPENDS } from "../../utils/constants";
 
 interface ChartInterface {
   type: "PIE" | "normal";

@@ -1,9 +1,4 @@
 "use client";
-import { useGetAndSetUserData } from "@/app/hooks/userHooks";
-import { useAppContext } from "@/app/utils/AppContext";
-import { SPEND_AMOUNT, TODAY_STATISTICS, UPDATE } from "@/app/utils/constants";
-import Spinner from "@/app/utils/Spinner";
-import { daysInThisMonth, getTodayDate } from "@/app/utils/utils";
 import { useEffect } from "react";
 import { CiSaveUp1 } from "react-icons/ci";
 import { IoTrendingUpSharp } from "react-icons/io5";
@@ -12,6 +7,11 @@ import { PiCurrencyInrBold } from "react-icons/pi";
 import Chart from "../re/Chart";
 import NavBar from "../re/NavBar";
 import SetMonthLimit from "./SetMonthLimit";
+import { useAppContext } from "../../utils/AppContext";
+import { daysInThisMonth, getTodayDate } from "../../utils/utils";
+import { useGetAndSetUserData } from "../../hooks/userHooks";
+import Spinner from "../../utils/Spinner";
+import { SPEND_AMOUNT, TODAY_STATISTICS, UPDATE } from "../../utils/constants";
 
 interface HomePageInterface {
   setPageNumber: (pageNumber: number) => void;

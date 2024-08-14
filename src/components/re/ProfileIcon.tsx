@@ -1,7 +1,8 @@
-import { useProfileImageUplaod, useSetLoading } from "@/app/hooks/appHooks";
-import { useAppContext } from "@/app/utils/AppContext";
-import Spinner from "@/app/utils/Spinner";
+
 import { BiUser } from "react-icons/bi";
+import { useProfileImageUplaod } from "../../hooks/appHooks";
+import { useAppContext } from "../../utils/AppContext";
+import Spinner from "../../utils/Spinner";
 
 interface ProfileIconInerface { }
 

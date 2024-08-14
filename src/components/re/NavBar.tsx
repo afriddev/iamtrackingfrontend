@@ -1,12 +1,11 @@
-"use client";
 
-import { useAppContext } from "@/app/utils/AppContext";
-import { HELLO, LIMIT, SPENDS } from "@/app/utils/constants";
 import { IoMdArrowDropup } from "react-icons/io";
 import { PiCurrencyInr } from "react-icons/pi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useState } from "react";
 import ProfileIcon from "./ProfileIcon";
+import { useAppContext } from "../../utils/AppContext";
+import { HELLO, LIMIT, SPENDS } from "../../utils/constants";
 
 interface NavBarInterface {
   setPageNumber: (pageNumber: number) => void;

@@ -1,11 +1,8 @@
-import {
-  MONTHLY_AMOUNT_ZERO_DISC,
-  SET_MONTHLY_AMOUNT,
-  UPDATE,
-} from "@/app/utils/constants";
+
 import { useState } from "react";
 import { CiSaveUp1 } from "react-icons/ci";
 import { PiCurrencyInrBold } from "react-icons/pi";
+import { MONTHLY_AMOUNT_ZERO_DISC, SET_MONTHLY_AMOUNT, UPDATE } from "../../utils/constants";
 
 function SetMonthLimit() {
   const [monthAmount, setMonthAmount] = useState<number>();

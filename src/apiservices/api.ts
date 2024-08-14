@@ -1,9 +1,7 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:3000";
-
 function postAPI(url: string, data: any) {
-  return axios(`http://localhost:3000/api/${url}`, {
+  return axios(`https://trackingme.vercel.app/api/${url}`, {
     method: "POST",
     data,
   });
