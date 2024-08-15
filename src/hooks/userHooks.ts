@@ -1,5 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import { getUserDataAPI, setMonthlyAmountAPI } from "../apiservices/api";
+import {
+  getUserDataAPI,
+  setMonthlyAmountAPI,
+  updateDailySpendAmountAPI,
+} from "../apiservices/api";
 import { useAppContext } from "../utils/AppContext";
 import { useGetMe } from "@/utils/utils";
 
@@ -34,9 +38,6 @@ export function useGetAndSetUserData() {
     },
   });
 
-  console.log(isPending)
-
-
   return { isPending, data, getUserData };
 }
 
@@ -61,5 +62,28 @@ export function useSetMonthlyAmount() {
     setMonthlyAmount,
     data,
     settingUserData,
+  };
+}
+
+export function useUpdateDailySSpendAMount() {
+  const { emailId } = useGetMe();
+  const { getUserData } = useGetAndSetUserData();
+  const {
+    isPending,
+    mutate: updateDailySpendAmount,
+    data,
+  } = useMutation({
+    mutationFn: ({ amount }: { amount: number }) =>
+      updateDailySpendAmountAPI({ emailId, amount }),
+    onSuccess(data) {
+      if (data?.data?.message === "SUCCESS") {
+        getUserData({ emailId });
+      }
+    },
+  });
+  return {
+    isPending,
+    data,
+    updateDailySpendAmount,
   };
 }

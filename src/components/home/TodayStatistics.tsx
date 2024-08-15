@@ -14,6 +14,8 @@ import { daysInThisMonth, getTodayDate } from "../../utils/utils";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import { useUpdateDailySSpendAMount } from "@/hooks/userHooks";
+import Spinner from "@/utils/Spinner";
 
 function TodayStatistics() {
   const { userData, todaySpendAmount } = useAppContext();
@@ -22,6 +24,7 @@ function TodayStatistics() {
     todaySpendAmount;
   const [amountMessage, setAmountMessage] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
+  const { isPending, updateDailySpendAmount } = useUpdateDailySSpendAMount()
 
   function handleChange(e: any) {
     const value = e?.target?.value;
@@ -33,8 +36,28 @@ function TodayStatistics() {
       setAmountMessage(AMOOUNT_ERROR);
     }
   }
+
+  function updateDailySpendAmmount() {
+    if (!amountMessage) {
+      updateDailySpendAmount({
+        amount: amount as unknown as number,
+      },{
+        onSuccess(data) {
+          if(data?.data?.message === "SUCCESS"){
+            setAmount("")
+          }
+          
+        },
+
+      });
+    }
+
+  }
+
+
   return (
     <div>
+      <Spinner loadingState={isPending} />
       {userData?.monthLimitAmount >= 500 && (
         <div className="flex w-full flex-col">
           <div className="mt-5 w-fit">
@@ -61,7 +84,7 @@ function TodayStatistics() {
                 icon="AMOUNT"
               />
             </div>
-            <Button>
+            <Button onClick={updateDailySpendAmmount}>
               <CiSaveUp1 className="-mt-1 h-6 w-6 pr-1 " />
               {UPDATE}
             </Button>

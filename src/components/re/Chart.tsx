@@ -48,8 +48,8 @@ function Chart({ type }: ChartInterface) {
           id: 2,
           value:
             userData?.dailyLimit - todaySpendAmount >= 0
-              ? userData?.dailyLimit - todaySpendAmount
-              : (userData?.dailyLimit - todaySpendAmount) * -1,
+              ? parseFloat((userData?.dailyLimit - todaySpendAmount).toFixed(1))
+              : parseFloat(((userData?.dailyLimit - todaySpendAmount) * -1).toFixed(1)),
           label: SAVINGS,
           color:
             todaySpendAmount >= userData?.dailyLimit ? "#f7746a" : "#55f540",

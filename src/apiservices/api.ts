@@ -24,5 +24,8 @@ export function getUserDataAPI(emailId: string) {
 }
 export function setMonthlyAmountAPI(data:{emailId:string,amount:number}){
   return postAPI("setmonthlimit",data)
+}
+export function updateDailySpendAmountAPI(data:{emailId:string,amount:number}){
+  return postAPI("adddailyspend",data)
 
 }
