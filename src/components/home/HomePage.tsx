@@ -22,18 +22,18 @@ function HomePage({ setPageNumber }: HomePageInterface) {
 
   if (isPending) return <Spinner loadingState={isPending} />
 
-  return (  
+  return (
     <div className="px-2 py-2 ">
       <div className=" p-1">
         <NavBar setPageNumber={setPageNumber} />
       </div>
-      
+
       {
-          userData?.monthLimitAmount < 500  && <div className="h-full flex items-center justify-center min-h-[80vh]">
+        userData?.monthLimitAmount < 500 && <div className="h-full flex items-center justify-center min-h-[80vh]">
           <SetMonthLimit />
-        </div> 
-        }
-      
+        </div>
+      }
+
       <div>
         {
           userData?.monthLimitAmount >= 500 && <TodayStatistics />
