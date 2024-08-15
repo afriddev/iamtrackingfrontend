@@ -96,7 +96,7 @@ function TodayStatistics() {
             </Button>
           </div>
           {
-            userData?.todaySpends?.length > 0 && <div className=" relative mt-4 max-h-[40vh] rounded-md border border-black pb-2 pt-6">
+            userData?.todaySpends?.length > 0 && <div className=" relative mt-4 max-h-[35vh] rounded-md border border-black pb-2 pt-6">
               <label className="absolute -top-[0.6rem] left-6 rounded-[0.1rem] bg-primary-foreground px-3 py-[0.1rem] text-[10px]  drop-shadow ">
                 {TRANSACTION_HISTORY}
               </label>
