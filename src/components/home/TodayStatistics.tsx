@@ -103,19 +103,25 @@ function TodayStatistics() {
               <div
                 className="flex items-center  justify-between text-xs "
               >
-                <div className="w-10">
+                <div className="w-10"><div className="w-fit border-b border-black">
                   {S_NO}
+                </div></div>
+                <div className="w-10">
+                  <div
+                    className={`flex w-fit border-b border-black items-start justify-start text-left `}
+                  >
+                    {AMOUNT}
+                  </div> 
                 </div>
+                <div className="w-20 flex items-center justify-center">
+                <div className="w-fit border-b border-black">{DATE}</div>
+                  </div>
+                <div className="w-32 flex items-center justify-center"> 
                 <div
-                  className={`flex w-10 items-start justify-start text-left `}
-                >
-                  {AMOUNT}
-                </div>
-                <div className="w-20">{DATE}</div>
-                <div
-                  className={`w-32 `}
+                  className={`w-fit  border-b border-black   `}
                 >
                   {RESPONSE}
+                </div>
                 </div>
               </div>
               {userData?.todaySpends?.map(
@@ -140,7 +146,7 @@ function TodayStatistics() {
                       </div>
                       <div className="w-20">{item?.date}</div>
                       <div
-                        className={`w-32 ${item?.response === "DAILY_LIMIT_ERROR" ? "text-destructive" : "text-constructive"}`}
+                        className={`w-32 text-center ${item?.response === "DAILY_LIMIT_ERROR" ? "text-destructive" : "text-constructive"}`}
                       >
                         {item?.response}
                       </div>
