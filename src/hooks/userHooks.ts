@@ -29,7 +29,7 @@ export function useGetAndSetUserData() {
         index++
       ) {
         todaySpendAmount =
-          todaySpendAmount + data?.data?.user?.todaySpends[index];
+          todaySpendAmount + data?.data?.user?.todaySpends[index]?.amount;
       }
       dispatch({
         type: "setTodaySpendAmount",
