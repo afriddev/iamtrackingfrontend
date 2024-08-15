@@ -4,7 +4,6 @@ import {
   SPEND_AMOUNT,
   TODAY_STATISTICS,
   UPDATE,
-  VIEW_MORE,
 } from "../../utils/constants";
 import { CiSaveUp1 } from "react-icons/ci";
 import { IoTrendingUpSharp } from "react-icons/io5";
@@ -16,7 +15,6 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { useUpdateDailySSpendAMount } from "@/hooks/userHooks";
 import Spinner from "@/utils/Spinner";
-import { MdOutlineNavigateNext } from "react-icons/md";
 
 
 function TodayStatistics() {
@@ -54,7 +52,6 @@ function TodayStatistics() {
 
   }
 
-
   return (
     <div>
       <Spinner loadingState={isPending} />
@@ -71,9 +68,7 @@ function TodayStatistics() {
             </label>
           </div>
           <div className="mt-5 relative  flex flex-col items-center justify-center gap-6">
-
-          <Button className=" absolute top-12 right-10   flex items-center h-6 text-[10px] px-2">{VIEW_MORE} <MdOutlineNavigateNext className="w-3  h-3 mt-[0.07rem]"/></Button>
-            <Chart chartType="PIE" page="STATISTICS"  />
+            <Chart chartType="PIE" page="STATISTICS" />
 
           </div>
 
@@ -91,6 +86,13 @@ function TodayStatistics() {
               <CiSaveUp1 className="-mt-1 h-6 w-6 pr-1 " />
               {UPDATE}
             </Button>
+          </div>
+          <div className="max-h-[40vh]">
+            {
+              userData?.todaySpends?.map((amount: number, index: number) => {
+                return <div key={index}>{amount}</div>
+              })
+            }
           </div>
         </div>
       )}

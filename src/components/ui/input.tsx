@@ -13,12 +13,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       switch(icon){
         case "AMOUNT":
           return <PiCurrencyInrBold className="w-[0.8rem] top-[0.64rem] left-2 h-[0.8rem] text-primary/50 absolute" />
-
       }
     }
 
-
-    
     return (
       <div  className="h-12 flex flex-col gap-[0.3rem] relative"> 
         {
