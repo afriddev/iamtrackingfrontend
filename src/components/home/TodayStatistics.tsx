@@ -95,67 +95,74 @@ function TodayStatistics() {
               {UPDATE}
             </Button>
           </div>
-          <div className=" relative mt-4 max-h-[40vh] rounded-md border border-black pb-3 pt-6">
-            <label className="absolute -top-[0.6rem] left-6 rounded-[0.1rem] bg-primary-foreground px-3 py-[0.1rem] text-[10px]  drop-shadow ">
-              {TRANSACTION_HISTORY}
-            </label>
-            <div className="flex max-h-[37vh] flex-col  gap-4 overflow-auto px-2">
-              <div
-                className="flex items-center  justify-between text-xs "
-              >
-                <div className="w-10"><div className="w-fit border-b border-black">
-                  {S_NO}
-                </div></div>
-                <div className="w-10">
-                  <div
-                    className={`flex w-fit border-b border-black items-start justify-start text-left `}
-                  >
-                    {AMOUNT}
-                  </div> 
-                </div>
-                <div className="w-20 flex items-center justify-center">
-                <div className="w-fit border-b border-black">{DATE}</div>
-                  </div>
-                <div className="w-32 flex items-center justify-center"> 
+          {
+            userData?.todaySpends?.length > 0 && <div className=" relative mt-4 max-h-[40vh] rounded-md border border-black pb-2 pt-6">
+              <label className="absolute -top-[0.6rem] left-6 rounded-[0.1rem] bg-primary-foreground px-3 py-[0.1rem] text-[10px]  drop-shadow ">
+                {TRANSACTION_HISTORY}
+              </label>
+              <div className="flex max-h-[37vh] flex-col  gap-2  px-2">
                 <div
-                  className={`w-fit  border-b border-black   `}
+                  className="flex items-center  justify-between text-xs max-w-[90vw]"
                 >
-                  {RESPONSE}
-                </div>
-                </div>
-              </div>
-              {userData?.todaySpends?.map(
-                (
-                  item: { amount: number; date: string; response: string },
-                  index: number,
-                ) => {
-                  return (
+                  <div className="w-10"><div className="w-fit border-b border-black">
+                    {S_NO}
+                  </div></div>
+                  <div className="w-10">
                     <div
-                      key={index}
-                      className="flex items-center  justify-between text-xs "
+                      className={`flex w-fit border-b border-black items-start justify-start text-left `}
                     >
-                      <div className="w-10">
-                        <div className=" rounded w-fit bg-primary p-1 px-2 text-xs text-primary-foreground">
-                          {index + 1}
-                        </div>
-                      </div>
-                      <div
-                        className={`flex w-10 items-start justify-start text-left ${item?.response === "DAILY_LIMIT_ERROR" ? "text-destructive" : "text-constructive"}`}
-                      >
-                        {item?.amount}
-                      </div>
-                      <div className="w-20">{item?.date}</div>
-                      <div
-                        className={`w-32 text-center ${item?.response === "DAILY_LIMIT_ERROR" ? "text-destructive" : "text-constructive"}`}
-                      >
-                        {item?.response}
-                      </div>
+                      {AMOUNT}
                     </div>
-                  );
-                },
-              )}
+                  </div>
+                  <div className="w-20 flex items-center justify-center">
+                    <div className="w-fit border-b border-black">{DATE}</div>
+                  </div>
+                  <div className="w-32 flex items-center justify-center">
+                    <div
+                      className={`w-fit  border-b border-black   `}
+                    >
+                      {RESPONSE}
+                    </div>
+                  </div>
+                </div>
+                <div className=" overflow-auto max-h-[32vh]">
+                  <div className=" flex flex-col  gap-3 pb-3 max-w-[90vw]">
+
+                    {userData?.todaySpends?.map(
+                      (
+                        item: { amount: number; date: string; response: string },
+                        index: number,
+                      ) => {
+                        return (
+                          <div
+                            key={index}
+                            className="flex items-center  justify-between text-xs "
+                          >
+                            <div className="w-10">
+                              <div className=" rounded w-fit bg-primary p-1 px-2 text-xs text-primary-foreground">
+                                {index + 1}
+                              </div>
+                            </div>
+                            <div
+                              className={` w-10  text-center ${item?.response === "DAILY_LIMIT_ERROR" ? "text-destructive" : "text-constructive"}`}
+                            >
+                              {item?.amount}
+                            </div>
+                            <div className="w-20">{item?.date}</div>
+                            <div
+                              className={`w-32 text-center ${item?.response === "DAILY_LIMIT_ERROR" ? "text-destructive" : "text-constructive"}`}
+                            >
+                              {item?.response}
+                            </div>
+                          </div>
+                        );
+                      },
+                    )}
+
+                  </div></div>
+              </div>
             </div>
-          </div>
+          }
         </div>
       )}
     </div>
