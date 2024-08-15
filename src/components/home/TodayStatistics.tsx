@@ -96,11 +96,11 @@ function TodayStatistics() {
             </Button>
           </div>
           {
-            userData?.todaySpends?.length > 0 && <div className=" relative mt-4 max-h-[35vh] rounded-md border border-black pb-2 pt-6">
+            userData?.todaySpends?.length > 0 && <div className=" relative mt-4 max-h-[33vh] rounded-md border border-black pb-2 pt-6">
               <label className="absolute -top-[0.6rem] left-6 rounded-[0.1rem] bg-primary-foreground px-3 py-[0.1rem] text-[10px]  drop-shadow ">
                 {TRANSACTION_HISTORY}
               </label>
-              <div className="flex max-h-[37vh] flex-col  gap-2  px-2">
+              <div className="flex max-h-[29vh] flex-col  gap-2  px-2">
                 <div
                   className="flex items-center  justify-between text-xs max-w-[90vw]"
                 >
