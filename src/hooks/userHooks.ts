@@ -76,7 +76,10 @@ export function useUpdateDailySSpendAMount() {
     mutationFn: ({ amount }: { amount: number }) =>
       updateDailySpendAmountAPI({ emailId, amount }),
     onSuccess(data) {
-      if (data?.data?.message === "SUCCESS") {
+      if (
+        data?.data?.message === "SUCCESS" ||
+        data?.data?.message === "DAILY_LIMIT_ERROR"
+      ) {
         getUserData({ emailId });
       }
     },

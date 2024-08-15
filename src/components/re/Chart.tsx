@@ -1,7 +1,7 @@
 import { pieArcLabelClasses, PieChart } from "@mui/x-charts";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../utils/AppContext";
-import { SAVINGS, TODAY_LIMIT, TODAY_SPENDS } from "../../utils/constants";
+import { SAVINGS, LIMIT, SPENDS } from "../../utils/constants";
 
 interface ChartInterface {
   type: "PIE" | "normal";
@@ -33,14 +33,14 @@ function Chart({ type }: ChartInterface) {
         temp.push({
           id: 0,
           value: userData?.dailyLimit,
-          label: TODAY_LIMIT,
+          label: `${LIMIT} (${userData?.dailyLimit})`,
           color: "#7600b5",
         });
         if (todaySpendAmount > 1) {
           temp.push({
             id: 1,
             value: todaySpendAmount,
-            label: TODAY_SPENDS,
+            label:  `${SPENDS} (${todaySpendAmount})`,
             color: "#55f540",
           });
         }
@@ -50,7 +50,9 @@ function Chart({ type }: ChartInterface) {
             userData?.dailyLimit - todaySpendAmount >= 0
               ? parseFloat((userData?.dailyLimit - todaySpendAmount).toFixed(1))
               : parseFloat(((userData?.dailyLimit - todaySpendAmount) * -1).toFixed(1)),
-          label: SAVINGS,
+          label:  `${SAVINGS} (${ userData?.dailyLimit - todaySpendAmount >= 0
+            ? parseFloat((userData?.dailyLimit - todaySpendAmount).toFixed(1))
+            : parseFloat(((userData?.dailyLimit - todaySpendAmount) * -1).toFixed(1))})`,
           color:
             todaySpendAmount >= userData?.dailyLimit ? "#f7746a" : "#55f540",
         });
@@ -75,7 +77,7 @@ function Chart({ type }: ChartInterface) {
               outerRadius: 100,
               paddingAngle: 5,
               cornerRadius: 15,
-              cx: 120,
+              cx: 100,
               type: "pie",
               arcLabel: (item) => {
                 if (

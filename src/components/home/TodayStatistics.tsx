@@ -8,7 +8,6 @@ import {
 import { CiSaveUp1 } from "react-icons/ci";
 import { IoTrendingUpSharp } from "react-icons/io5";
 import { MdTrendingDown } from "react-icons/md";
-import { PiCurrencyInrBold } from "react-icons/pi";
 import Chart from "../re/Chart";
 import { daysInThisMonth, getTodayDate } from "../../utils/utils";
 import { Input } from "../ui/input";
@@ -41,12 +40,12 @@ function TodayStatistics() {
     if (!amountMessage) {
       updateDailySpendAmount({
         amount: amount as unknown as number,
-      },{
+      }, {
         onSuccess(data) {
-          if(data?.data?.message === "SUCCESS"){
+          if (data?.data?.message === "SUCCESS" || data?.data?.message === "DAILY_LIMIT_ERROR") {
             setAmount("")
           }
-          
+
         },
 
       });
