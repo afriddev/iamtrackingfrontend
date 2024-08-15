@@ -72,7 +72,7 @@ function TodayStatistics() {
           </div>
           <div className="mt-5 relative  flex flex-col items-center justify-center gap-6">
 
-          <Button className=" absolute top-12 right-10   flex items-center h-6 text-[10px] px-2">{VIEW_MORE} <MdOutlineNavigateNext className="w-3  h-3"/></Button>
+          <Button className=" absolute top-12 right-10   flex items-center h-6 text-[10px] px-2">{VIEW_MORE} <MdOutlineNavigateNext className="w-3  h-3 mt-[0.111rem]"/></Button>
             <Chart chartType="PIE" page="STATISTICS"  />
 
           </div>
