@@ -96,7 +96,7 @@ function TodayStatistics() {
             </Button>
           </div>
           <div className=" relative mt-4 max-h-[40vh] rounded-md border border-black pb-3 pt-6">
-            <label className="absolute -top-[0.6rem] left-6 rounded-[0.1rem] bg-[#ede6e6] px-3 py-[0.1rem] text-[10px]  drop-shadow ">
+            <label className="absolute -top-[0.6rem] left-6 rounded-[0.1rem] bg-primary-foreground px-3 py-[0.1rem] text-[10px]  drop-shadow ">
               {TRANSACTION_HISTORY}
             </label>
             <div className="flex max-h-[37vh] flex-col  gap-4 overflow-auto px-2">
