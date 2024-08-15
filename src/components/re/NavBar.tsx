@@ -85,7 +85,7 @@ function NavBar({ setPageNumber }: NavBarInterface) {
                     {LIMIT}
                     <span>{":"}</span>
                   </label>
-                  <a>{userData?.dailyLimit}</a>
+                  <a>{Math.floor(userData?.dailyLimit)}</a>
                 </div>
               </li>
             </div>

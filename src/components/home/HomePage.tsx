@@ -16,7 +16,7 @@ function HomePage({ setPageNumber }: HomePageInterface) {
 
   useEffect(() => {
     getUserData({
-      emailId: "369afrd@gmail.com",
+      emailId: "afrdayan01@gmail.com",
     });
   }, []);
 

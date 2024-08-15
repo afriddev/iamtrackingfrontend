@@ -30,8 +30,8 @@ function Chart({ chartType, page }: ChartInterface) {
           }[] = [];
           temp.push({
             id: 0,
-            value: userData?.dailyLimit,
-            label: `${LIMIT} (${userData?.dailyLimit})`,
+            value: Math.floor(userData?.dailyLimit)     ,
+            label: `${LIMIT} (${Math.floor(userData?.dailyLimit)})`,
             color: "#7600b5",
           });
           if (todaySpendAmount > 1) {
@@ -45,12 +45,12 @@ function Chart({ chartType, page }: ChartInterface) {
           temp.push({
             id: 2,
             value:
-              userData?.dailyLimit - todaySpendAmount >= 0
+            Math.floor(userData?.dailyLimit - todaySpendAmount >= 0
                 ? parseFloat((userData?.dailyLimit - todaySpendAmount).toFixed(1))
-                : parseFloat(((userData?.dailyLimit - todaySpendAmount) * -1).toFixed(1)),
-            label: `${SAVINGS} (${userData?.dailyLimit - todaySpendAmount >= 0
+                : parseFloat(((userData?.dailyLimit - todaySpendAmount) * -1).toFixed(1))),
+            label: `${SAVINGS} (${Math.floor(userData?.dailyLimit - todaySpendAmount >= 0
               ? parseFloat((userData?.dailyLimit - todaySpendAmount).toFixed(1))
-              : parseFloat(((userData?.dailyLimit - todaySpendAmount) * -1).toFixed(1))})`,
+              : parseFloat(((userData?.dailyLimit - todaySpendAmount) * -1).toFixed(1)))})`,
             color:
               todaySpendAmount >= userData?.dailyLimit ? "#f7746a" : "#55f540",
           });
