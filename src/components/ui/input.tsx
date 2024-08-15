@@ -12,7 +12,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     function getIcon(icon:string):React.ReactNode{
       switch(icon){
         case "AMOUNT":
-          return <PiCurrencyInrBold className="w-[0.8rem] top-[0.595rem] left-2 h-[0.8rem] text-primary/50 absolute" />
+          return <PiCurrencyInrBold className="w-[0.8rem] top-[0.64rem] left-2 h-[0.8rem] text-primary/50 absolute" />
 
       }
     }

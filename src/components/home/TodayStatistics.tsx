@@ -4,6 +4,7 @@ import {
   SPEND_AMOUNT,
   TODAY_STATISTICS,
   UPDATE,
+  VIEW_MORE,
 } from "../../utils/constants";
 import { CiSaveUp1 } from "react-icons/ci";
 import { IoTrendingUpSharp } from "react-icons/io5";
@@ -15,6 +16,8 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { useUpdateDailySSpendAMount } from "@/hooks/userHooks";
 import Spinner from "@/utils/Spinner";
+import { MdOutlineNavigateNext } from "react-icons/md";
+
 
 function TodayStatistics() {
   const { userData, todaySpendAmount } = useAppContext();
@@ -45,9 +48,7 @@ function TodayStatistics() {
           if (data?.data?.message === "SUCCESS" || data?.data?.message === "DAILY_LIMIT_ERROR") {
             setAmount("")
           }
-
         },
-
       });
     }
 
@@ -69,8 +70,11 @@ function TodayStatistics() {
               )}
             </label>
           </div>
-          <div className="mt-5 flex flex-col items-center justify-center gap-6">
-            <Chart type="PIE" />
+          <div className="mt-5 relative  flex flex-col items-center justify-center gap-6">
+
+          <Button className=" absolute top-12 right-10   flex items-center h-6 text-[10px] px-2">{VIEW_MORE} <MdOutlineNavigateNext className="w-3 mt-[0.1rem] h-3"/></Button>
+            <Chart chartType="PIE" page="STATISTICS"  />
+
           </div>
 
           <div className=" mt-4 flex items-center justify-evenly gap-4">
