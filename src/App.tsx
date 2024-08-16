@@ -27,7 +27,7 @@ export default function App() {
           <div className="absolute  z-[1] h-[100vh] w-[100vw] ">
             <img src="beams.jpg" className="w-full h-full object-cover" />
           </div>
-          <Login />
+         <div className="z-[2] w-[100vw] relative top-1">  <Login /></div>
 
           {/* <div className="z-[2]  relative top-1  w-[100vw]">
             <HomePage setPageNumber={handlePageIndexChange} />
