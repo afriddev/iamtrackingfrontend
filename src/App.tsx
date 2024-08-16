@@ -7,6 +7,7 @@ import HomePage from "./components/home/HomePage";
 import { useAppContext } from "./utils/AppContext";
 import Loading from "./utils/Loading";
 import { useGetAndSetUserData } from "./hooks/userHooks";
+import Login from "./security/Login";
 
 export default function App() {
   const [pageindex, setPageIndex] = useState<number>(0);
@@ -26,10 +27,12 @@ export default function App() {
           <div className="absolute  z-[1] h-[100vh] w-[100vw] ">
             <img src="beams.jpg" className="w-full h-full object-cover" />
           </div>
+          <Login />
 
-          <div className="z-[2]  relative top-1  w-[100vw]">
+          {/* <div className="z-[2]  relative top-1  w-[100vw]">
             <HomePage setPageNumber={handlePageIndexChange} />
           </div>
+           */}
         </div>
     </QueryClientProvider>
   );
