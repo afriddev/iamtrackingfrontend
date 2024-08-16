@@ -3,12 +3,13 @@ import {
   AMOOUNT_ERROR,
   AMOUNT,
   DATE,
-  DEFAULT,
   GROCERY,
   NO_DATA_FOUND,
+  NORMAL,
   RESPONSE,
   S_NO,
   SPEND_AMOUNT,
+  SPEND_TYPE,
   TODAY_STATISTICS,
   TRANSACTION_HISTORY,
   UPDATE,
@@ -47,9 +48,9 @@ function TodayStatistics() {
     useState<boolean>(false);
   const [selectedTransactionIndex, setSelectedTransactionIndex] =
     useState<number>(0);
-  const [selectedRadioButton, setSelectedRadioButton] = useState<
-    "DEFAULT" | "GROCERY"
-  >("DEFAULT");
+  const [selectedRadioButtonType, setSelectedRadioButtonType] = useState<
+    "NORMAL" | "GROCERY"
+  >("NORMAL");
 
   function handleChange(e: any) {
     const value = e?.target?.value;
@@ -67,6 +68,7 @@ function TodayStatistics() {
       updateDailySpendAmount(
         {
           amount: amount as unknown as number,
+          type: selectedRadioButtonType,
         },
         {
           onSuccess(data) {
@@ -92,8 +94,8 @@ function TodayStatistics() {
     setOpenTransactionType(openTransactionType ? false : true);
   }
 
-  function handleRadioButtonChange(value: "DEFAULT" | "GROCERY") {
-    setSelectedRadioButton(value);
+  function handleRadioButtonChange(value: "NORMAL" | "GROCERY") {
+    setSelectedRadioButtonType(value);
   }
 
   return (
@@ -116,15 +118,15 @@ function TodayStatistics() {
           </div>
 
           <div className=" relative  flex items-center justify-evenly gap-4">
-            <div className="absolute left-0 top-10 z-[5]">
+            <div className="absolute left-7 top-[3.3rem] z-[5]">
               <RadioGroup
                 onValueChange={handleRadioButtonChange}
-                defaultValue={selectedRadioButton}
-                className="flex items-center text-[8px]"
+                defaultValue={selectedRadioButtonType}
+                className="flex items-center gap-4 text-[10px]"
               >
                 <div className="flex items-center gap-1">
-                  <RadioGroupItem value="DEFAULT" id="r1" />
-                  <label htmlFor="r1">{DEFAULT}</label>
+                  <RadioGroupItem value="NORMAL" id="r1" />
+                  <label htmlFor="r1">{NORMAL}</label>
                 </div>
                 <div className="flex items-center gap-1">
                   <RadioGroupItem value="GROCERY" id="r2" />
@@ -181,7 +183,7 @@ function TodayStatistics() {
                 )}
               </div>
             </div>
-            <div className=" relative mt-8  max-h-[33vh] rounded-md border border-black pb-2 pt-6">
+            <div className=" relative mt-10  max-h-[33vh] rounded-md border border-black pb-2 pt-6">
               <label className="absolute -top-[0.6rem] left-6 rounded-[0.1rem] bg-primary-foreground px-3 py-[0.1rem] text-[10px]  drop-shadow ">
                 {TRANSACTION_HISTORY}
               </label>
@@ -193,15 +195,15 @@ function TodayStatistics() {
                   <div className="flex max-w-[90vw]  items-center justify-between text-xs">
                     <div className="w-10">
                       <div
-                        className="b order-b
-                    w-fit border-black"
+                        className="w-fit
+                    border-b border-black"
                       >
                         {S_NO}
                       </div>
                     </div>
-                    <div className="w-10">
+                    <div className="flex w-20 items-center justify-center">
                       <div
-                        className={`flex w-fit items-start justify-start border-b border-black text-left `}
+                        className={`flex w-fit border-b border-black text-center  `}
                       >
                         {AMOUNT}
                       </div>
@@ -209,7 +211,14 @@ function TodayStatistics() {
                     <div className="flex w-20 items-center justify-center">
                       <div className="w-fit border-b border-black">{DATE}</div>
                     </div>
-                    <div className="flex w-32 items-center justify-center">
+                    {selectedTransactionIndex === 0 && (
+                      <div className="flex w-32 items-center justify-center">
+                        <div className={`w-fit  border-b border-black   `}>
+                          {SPEND_TYPE}
+                        </div>
+                      </div>
+                    )}
+                    <div className="flex w-20 items-center justify-center">
                       <div className={`w-fit  border-b border-black   `}>
                         {RESPONSE}
                       </div>
@@ -220,40 +229,40 @@ function TodayStatistics() {
                       {(selectedTransactionIndex === 0
                         ? userData?.todaySpends
                         : userData?.monthlySpends
-                      )?.map(
-                        (
-                          item: {
-                            amount: number;
-                            date: string;
-                            response: string;
-                          },
-                          index: number,
-                        ) => {
-                          return (
-                            <div
-                              key={index}
-                              className="flex items-center  justify-between text-xs "
-                            >
-                              <div className="w-10">
-                                <div className=" w-fit rounded bg-primary p-1 px-2 text-xs text-primary-foreground">
-                                  {index + 1}
-                                </div>
-                              </div>
-                              <div
-                                className={` w-10  text-center ${item?.response === "DAILY_LIMIT_ERROR" ? "text-destructive" : "text-constructive"}`}
-                              >
-                                {item?.amount}
-                              </div>
-                              <div className="w-20">{item?.date}</div>
-                              <div
-                                className={`w-32 text-center ${item?.response === "DAILY_LIMIT_ERROR" ? "text-destructive" : "text-constructive"}`}
-                              >
-                                {item?.response}
+                      )?.map((item: any, index: number) => {
+                        return (
+                          <div
+                            key={index}
+                            className="flex items-center  justify-between text-xs "
+                          >
+                            <div className="w-10">
+                              <div className=" w-fit rounded bg-primary p-1 px-2 text-xs text-primary-foreground">
+                                {index + 1}
                               </div>
                             </div>
-                          );
-                        },
-                      )}
+                            <div
+                              className={` w-20  text-center font-semibold ${item?.response === "DAILY_LIMIT_ERROR" ? "text-destructive" : "text-constructive"}`}
+                            >
+                              {item?.amount}
+                            </div>
+                            <div className="w-20 font-semibold">
+                              {item?.date}
+                            </div>
+                            {selectedTransactionIndex === 0 && (
+                              <div
+                                className={`w-32 text-center font-semibold  ${item?.response === "DAILY_LIMIT_ERROR" ? "text-destructive" : "text-constructive"}`}
+                              >
+                                {item?.type}
+                              </div>
+                            )}
+                            <div
+                              className={`w-20 text-center font-semibold ${item?.response === "DAILY_LIMIT_ERROR" ? "text-destructive" : "text-constructive"}`}
+                            >
+                              {item?.response === "DAILY_LIMIT_ERROR"?"Over Limit!":"Success"}
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>

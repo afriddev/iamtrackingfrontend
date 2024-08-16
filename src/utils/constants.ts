@@ -21,3 +21,5 @@ export const RESPONSE = "Response"
 export const NO_DATA_FOUND = "No data found!"
 export const GROCERY = "Grocery"
 export const DEFAULT = "Default"
+export const NORMAL = 'Normal'
+export const SPEND_TYPE = "Spend Type"

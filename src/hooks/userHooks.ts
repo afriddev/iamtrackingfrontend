@@ -50,12 +50,11 @@ export function useSetMonthlyAmount() {
   } = useMutation({
     mutationFn: ({ amount }: { amount: number }) =>
       setMonthlyAmountAPI({ emailId, amount }),
-    
   });
   return {
     isPending,
     setMonthlyAmount,
-    data
+    data,
   };
 }
 
@@ -66,8 +65,13 @@ export function useUpdateDailySpendAMount() {
     mutate: updateDailySpendAmount,
     data,
   } = useMutation({
-    mutationFn: ({ amount }: { amount: number }) =>
-      updateDailySpendAmountAPI({ emailId, amount }),
+    mutationFn: ({
+      amount,
+      type,
+    }: {
+      amount: number;
+      type: "GROCERY" | "NORMAL";
+    }) => updateDailySpendAmountAPI({ emailId, amount, type }),
   });
   return {
     isPending,
