@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const BASE_URL = "https://trackmebackend.vercel.app/api/"
+const BASE_URL = "https://iamtrackingbackend.vercel.app/api/"
 
 function postAPI(url: string, data: any) {
   return axios(`${BASE_URL}${url}`, {

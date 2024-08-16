@@ -43,7 +43,6 @@ export function useGetAndSetUserData() {
 
 export function useSetMonthlyAmount() {
   const { emailId } = useGetMe();
-  const { getUserData, isPending: settingUserData } = useGetAndSetUserData();
   const {
     isPending,
     data,
@@ -51,23 +50,17 @@ export function useSetMonthlyAmount() {
   } = useMutation({
     mutationFn: ({ amount }: { amount: number }) =>
       setMonthlyAmountAPI({ emailId, amount }),
-    onSuccess(data) {
-      if (data?.data?.message === "SUCCESS") {
-        getUserData({ emailId });
-      }
-    },
+    
   });
   return {
     isPending,
     setMonthlyAmount,
-    data,
-    settingUserData,
+    data
   };
 }
 
-export function useUpdateDailySSpendAMount() {
+export function useUpdateDailySpendAMount() {
   const { emailId } = useGetMe();
-  const { getUserData } = useGetAndSetUserData();
   const {
     isPending,
     mutate: updateDailySpendAmount,
@@ -75,14 +68,6 @@ export function useUpdateDailySSpendAMount() {
   } = useMutation({
     mutationFn: ({ amount }: { amount: number }) =>
       updateDailySpendAmountAPI({ emailId, amount }),
-    onSuccess(data) {
-      if (
-        data?.data?.message === "SUCCESS" ||
-        data?.data?.message === "DAILY_LIMIT_ERROR"
-      ) {
-        getUserData({ emailId });
-      }
-    },
   });
   return {
     isPending,

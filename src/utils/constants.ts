@@ -18,3 +18,6 @@ export const S_NO = "S No"
 export const AMOUNT = 'Amount'
 export const DATE = "Date"
 export const RESPONSE = "Response"
+export const NO_DATA_FOUND = "No data found!"
+export const GROCERY = "Grocery"
+export const DEFAULT = "Default"
