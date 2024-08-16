@@ -23,3 +23,4 @@ export const GROCERY = "Grocery"
 export const DEFAULT = "Default"
 export const NORMAL = 'Normal'
 export const SPEND_TYPE = "Spend Type"
+export const AMOUNT_ERROR = "Please enter Amount!"

@@ -2,6 +2,7 @@ import { useAppContext } from "../../utils/AppContext";
 import {
   AMOOUNT_ERROR,
   AMOUNT,
+  AMOUNT_ERROR,
   DATE,
   GROCERY,
   NO_DATA_FOUND,
@@ -65,23 +66,29 @@ function TodayStatistics() {
 
   function updateDailySpendAmmount() {
     if (!amountMessage) {
-      updateDailySpendAmount(
-        {
-          amount: amount as unknown as number,
-          type: selectedRadioButtonType,
-        },
-        {
-          onSuccess(data) {
-            if (
-              data?.data?.message === "SUCCESS" ||
-              data?.data?.message === "DAILY_LIMIT_ERROR"
-            ) {
-              setAmount("");
-              getUserData({ emailId });
-            }
+      if(amount){
+        updateDailySpendAmount(
+          {
+            amount: amount as unknown as number,
+            type: selectedRadioButtonType,
           },
-        },
-      );
+          {
+            onSuccess(data) {
+              if (
+                data?.data?.message === "SUCCESS" ||
+                data?.data?.message === "DAILY_LIMIT_ERROR"
+              ) {
+                setAmount("");
+                getUserData({ emailId });
+              }
+            },
+          },
+        );
+      }
+      else{
+        setAmountMessage(AMOUNT_ERROR)
+
+      }
     }
   }
 
@@ -258,7 +265,9 @@ function TodayStatistics() {
                             <div
                               className={`w-20 text-center font-semibold ${item?.response === "DAILY_LIMIT_ERROR" ? "text-destructive" : "text-constructive"}`}
                             >
-                              {item?.response === "DAILY_LIMIT_ERROR"?"Over Limit!":"Success"}
+                              {item?.response === "DAILY_LIMIT_ERROR"
+                                ? "Over Limit!"
+                                : "Success"}
                             </div>
                           </div>
                         );
