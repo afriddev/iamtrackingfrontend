@@ -4,5 +4,5 @@ import './index.css'
 import AppContext from './utils/AppContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
-    <AppContext> <App /></AppContext>
+    <AppContext> <App /> </AppContext>
 )
