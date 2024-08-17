@@ -51,11 +51,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       }
     }
 
+
     return (
       <div className="relative flex h-12 flex-col gap-[0.3rem]">
         {icon && getIcon(icon)}
         <div className="flex items-center gap-2">
           <input
+          autoComplete="off"
             type={type}
             className={cn(
               `flex h-9 w-full rounded-md border border-input bg-background px-3 py-2 text-xs shadow-xl ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed  disabled:opacity-50 ${icon && "pl-6"}`,

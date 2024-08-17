@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import {
   getUserDataAPI,
+  sendOtpAPI,
   setMonthlyAmountAPI,
   updateDailySpendAmountAPI,
 } from "../apiservices/api";
@@ -78,4 +79,18 @@ export function useUpdateDailySpendAMount() {
     data,
     updateDailySpendAmount,
   };
+}
+
+export function useSendOtp() {
+  const { emailId } = useGetMe();
+
+  const {
+    mutate: sendOtp,
+    isPending,
+    data,
+  } = useMutation({
+    mutationFn: ({ method }: { method: string }) =>
+      sendOtpAPI({ emailId, method }),
+  });
+  return { sendOtp, isPending, data };
 }

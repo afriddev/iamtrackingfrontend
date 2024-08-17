@@ -47,3 +47,5 @@ export const PASSWORD_DONT_MATCH = "Passwords does't match";
 export const OTP = "OTP"
 export const OPT_DONT_MATCH = "Wrong OTP entered"
 export const NEXT = "Next"
+export const INVALID_EMAIL_ID = "Invalid Email Id"
+export const INVALID_OTP = "Invalid Otp"

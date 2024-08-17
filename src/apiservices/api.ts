@@ -31,3 +31,11 @@ export function updateDailySpendAmountAPI(data: {
 }) {
   return postAPI("adddailyspend", data);
 }
+
+export function sendOtpAPI(data: {
+  emailId: string;
+  method:string
+}) {
+  return postAPI("sendotp", data);
+}
+
