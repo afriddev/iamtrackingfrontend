@@ -73,6 +73,9 @@ function Login({ setPageIndex }: LoginInterface) {
             onChange={handleUserNameChange}
             placeholder={USER_NAME}
             error={userNameError}
+            mandatory={
+              /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userName) ? false : true
+            }
           />
           <div className="relative">
             <label
@@ -93,6 +96,7 @@ function Login({ setPageIndex }: LoginInterface) {
               value={password}
               error={passwordError}
               onChange={handlePasswordChange}
+              mandatory={password ? false : true}
             />
           </div>
         </div>

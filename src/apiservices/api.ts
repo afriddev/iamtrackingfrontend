@@ -1,6 +1,8 @@
+import { createUserType } from "@/types/userTypes";
 import axios from "axios";
 
 const BASE_URL = "https://iamtrackingbackend.vercel.app/api/";
+// const BASE_URL = "http://localhost:3000/api/";
 
 function postAPI(url: string, data: any) {
   return axios(`${BASE_URL}${url}`, {
@@ -32,10 +34,10 @@ export function updateDailySpendAmountAPI(data: {
   return postAPI("adddailyspend", data);
 }
 
-export function sendOtpAPI(data: {
-  emailId: string;
-  method:string
-}) {
+export function sendOtpAPI(data: { emailId: string; method: string }) {
   return postAPI("sendotp", data);
 }
 
+export function createUserAPI(data: createUserType) {
+  return postAPI("createuser", data);
+}

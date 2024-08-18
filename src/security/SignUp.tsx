@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useSendOtp } from "@/hooks/userHooks";
+import { useCreateUser, useSendOtp } from "@/hooks/userHooks";
+import { createUserType } from "@/types/userTypes";
 import {
+  ACCOUNT_CREATED_SUCCESS,
   CREATE_ACCOUNT,
   EMAIL_ID,
   EMAIL_ID_ERROR,
@@ -15,6 +17,7 @@ import {
   MOBILE_NUMBER,
   NEXT,
   OTP,
+  OTP_SEND_SUCCESS,
   PASSWORD,
   PASSWORD_DONT_MATCH,
   PASSWORD_ERROR,
@@ -25,6 +28,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoEyeOffOutline } from "react-icons/io5";
 import { LuEye } from "react-icons/lu";
+import { useToast } from "@/components/ui/use-toast";
+import { getErrorDescription } from "@/utils/utils";
 
 interface SignUpInterface {
   setPageIndex: (index: number) => void;
@@ -56,6 +61,8 @@ function SignUp({ setPageIndex }: SignUpInterface) {
   const { sendOtp, isPending } = useSendOtp();
   const [signUpOtp, setSignUpOtp] = useState<number | undefined>();
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+  const { createUser, isPending: creatingUser } = useCreateUser();
+  const { toast } = useToast();
 
   function handlePasswordVisibleClick() {
     setPasswordVisible(passwordVisible ? false : true);
@@ -79,22 +86,69 @@ function SignUp({ setPageIndex }: SignUpInterface) {
       sendOtp(
         {
           method: "SIGNUP",
+          emailId: getValues("email"),
         },
         {
           onSuccess(data) {
             if (data?.data?.message === "SUCCESS") {
               setSignUpOtp(parseInt(data?.data?.otp));
               setStep(3);
+              if (data?.data?.message === "SUCCESS") {
+                toast({
+                  title: "SUCCESS",
+                  description: OTP_SEND_SUCCESS,
+                  variant: "constructive",
+                });
+              } else {
+                toast({
+                  title: "SUCCESS",
+                  description: getErrorDescription(data?.data?.message),
+                  variant: "destructive",
+                });
+              }
             }
           },
         },
       );
     } else if (step === 3) {
-      const formData: FormDataInterface = e;
       console.log(signUpOtp);
-      if (parseInt(formData?.otp) === signUpOtp) {
-        delete (formData as any).otp;
-        console.log(formData);
+      if (parseInt(e?.otp) === signUpOtp) {
+        const userData: createUserType = {
+          emailId: e?.email,
+          firstName: e?.FN,
+          lastName: e?.LN,
+          password: e?.passwordtwo,
+          mobileNumber: e?.phone,
+        };
+        createUser(
+          {
+            data: userData,
+          },
+          {
+            onSuccess(data) {
+              if (data?.data?.message === "SUCCESS") {
+                toast({
+                  title: "SUCCESS",
+                  description: ACCOUNT_CREATED_SUCCESS,
+                  variant: "constructive",
+                });
+                setTimeout(()=>{handleLoginClick();},500)
+              } else {
+                toast({
+                  title: "SUCCESS",
+                  description: getErrorDescription(data?.data?.message),
+                  variant: "destructive",
+                });
+              }
+            },
+          },
+        );
+      } else {
+        setValue("otp", "");
+        setError("otp", {
+          type: "manual",
+          message: INVALID_OTP,
+        });
       }
     }
   }
@@ -104,13 +158,13 @@ function SignUp({ setPageIndex }: SignUpInterface) {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (emailPattern.test(emailId)) {
       clearErrors("email");
-      setValue("email", emailId);
     } else {
       setError("email", {
         type: "manual",
         message: INVALID_EMAIL_ID,
       });
     }
+    setValue("email", emailId);
   }
 
   function handleOtpChange(e: any) {
@@ -128,7 +182,7 @@ function SignUp({ setPageIndex }: SignUpInterface) {
 
   return (
     <div className="flex h-[80vh] flex-col items-center justify-between p-2">
-      <Spinner loadingState={isPending} />
+      <Spinner loadingState={isPending || creatingUser} />
       <div className="mt-10 h-[30vh]">
         <img src="createAccount.png" className="h-full w-full object-fill" />
       </div>
@@ -145,14 +199,18 @@ function SignUp({ setPageIndex }: SignUpInterface) {
                   icon="FN"
                   placeholder={FIRST_NAME}
                   error={errors?.FN?.message}
-                  mandatory={true}
+                  mandatory={
+                    watch("FN") && watch("FN")?.length > 2 ? false : true
+                  }
                   {...register("FN", {
                     required: FIRST_NAME_ERROR,
+                    minLength: 3,
                   })}
                 />
                 <Input
                   className="pl-8"
                   icon="LN"
+                  mandatory={watch("LN") ? false : undefined}
                   placeholder={LAST_NAME}
                   {...register("LN")}
                 />
@@ -167,13 +225,19 @@ function SignUp({ setPageIndex }: SignUpInterface) {
                   icon="EMAIL"
                   placeholder={EMAIL_ID}
                   error={errors?.email?.message}
-                  mandatory={true}
+                  mandatory={
+                    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(watch("email"))
+                      ? true
+                      : false
+                  }
+                  value={getValues("email")}
                   onChange={checkEmail}
                 />
                 <Input
                   className="pl-8"
                   icon="PHONE"
                   placeholder={MOBILE_NUMBER}
+                  mandatory={watch("phone") ? false : undefined}
                   {...register("phone")}
                 />
               </div>
@@ -188,7 +252,7 @@ function SignUp({ setPageIndex }: SignUpInterface) {
                     icon="PASSWORD"
                     placeholder={PASSWORD}
                     error={errors?.passwordone?.message}
-                    mandatory={true}
+                    mandatory={!watch("passwordone") ? true : false}
                     type="input "
                     {...register("passwordone", {
                       required: PASSWORD_ERROR,
@@ -211,7 +275,12 @@ function SignUp({ setPageIndex }: SignUpInterface) {
                     icon="PASSWORD"
                     placeholder={PASSWORD}
                     error={errors?.passwordtwo?.message}
-                    mandatory={true}
+                    mandatory={
+                      watch("passwordtwo") !== watch("passwordone") ||
+                      !watch("passwordtwo")
+                        ? true
+                        : false
+                    }
                     type={passwordVisible ? "text" : "password"}
                     {...register("passwordtwo", {
                       required: PASSWORD_ERROR,
@@ -230,7 +299,9 @@ function SignUp({ setPageIndex }: SignUpInterface) {
                 icon="OTP"
                 placeholder={OTP}
                 error={errors?.otp?.message}
-                mandatory={true}
+                mandatory={
+                  watch("otp") && watch("otp")?.length === 6 ? false : true
+                }
                 onChange={handleOtpChange}
                 value={getValues("otp") ?? ""}
               />

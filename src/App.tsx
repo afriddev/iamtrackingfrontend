@@ -9,6 +9,7 @@ import Loading from "./utils/Loading";
 import { useGetAndSetUserData } from "./hooks/userHooks";
 import Login from "./security/Login";
 import LoginMain from "./security/LoginMain";
+import { Toaster } from "@/components/ui/toaster"
 
 export default function App() {
   const [pageindex, setPageIndex] = useState<number>(0);
@@ -24,6 +25,9 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
         {(isLoading ) && <Loading />}
+        {
+          <Toaster />
+        }
         <div className="relative font-mono">
           <div className="absolute  z-[1] h-[100vh] w-[100vw] ">
             <img src="beams.jpg" className="w-full h-full object-cover" />

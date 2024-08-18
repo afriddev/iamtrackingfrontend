@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import {
+  createUserAPI,
   getUserDataAPI,
   sendOtpAPI,
   setMonthlyAmountAPI,
@@ -7,6 +8,7 @@ import {
 } from "../apiservices/api";
 import { useAppContext } from "../utils/AppContext";
 import { useGetMe } from "@/utils/utils";
+import { createUserType } from "@/types/userTypes";
 
 export function useGetAndSetUserData() {
   const { dispatch } = useAppContext();
@@ -82,15 +84,25 @@ export function useUpdateDailySpendAMount() {
 }
 
 export function useSendOtp() {
-  const { emailId } = useGetMe();
 
   const {
     mutate: sendOtp,
     isPending,
     data,
   } = useMutation({
-    mutationFn: ({ method }: { method: string }) =>
+    mutationFn: ({ method ,emailId}: { method: string ,emailId:string}) =>
       sendOtpAPI({ emailId, method }),
   });
   return { sendOtp, isPending, data };
+}
+
+export function useCreateUser() {
+  const {
+    mutate: createUser,
+    isPending,
+    data,
+  } = useMutation({
+    mutationFn: ({ data }: { data: createUserType }) => createUserAPI(data),
+  });
+  return { createUser, isPending, data };
 }
