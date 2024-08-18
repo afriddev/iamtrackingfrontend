@@ -41,3 +41,7 @@ export function sendOtpAPI(data: { emailId: string; method: string }) {
 export function createUserAPI(data: createUserType) {
   return postAPI("createuser", data);
 }
+
+export function loginUserAPI(data: {emailId:string,password:string}) {
+  return postAPI("login", data);
+}

@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import {
   createUserAPI,
   getUserDataAPI,
+  loginUserAPI,
   sendOtpAPI,
   setMonthlyAmountAPI,
   updateDailySpendAmountAPI,
@@ -84,13 +85,12 @@ export function useUpdateDailySpendAMount() {
 }
 
 export function useSendOtp() {
-
   const {
     mutate: sendOtp,
     isPending,
     data,
   } = useMutation({
-    mutationFn: ({ method ,emailId}: { method: string ,emailId:string}) =>
+    mutationFn: ({ method, emailId }: { method: string; emailId: string }) =>
       sendOtpAPI({ emailId, method }),
   });
   return { sendOtp, isPending, data };
@@ -105,4 +105,20 @@ export function useCreateUser() {
     mutationFn: ({ data }: { data: createUserType }) => createUserAPI(data),
   });
   return { createUser, isPending, data };
+}
+export function useLoginUser() {
+  const {
+    mutate: loginUser,
+    isPending,
+    data,
+  } = useMutation({
+    mutationFn: ({
+      emailId,
+      password,
+    }: {
+      emailId: string;
+      password: string;
+    }) => loginUserAPI({ emailId, password }),
+  });
+  return { loginUser, isPending, data };
 }

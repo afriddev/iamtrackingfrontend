@@ -101,7 +101,7 @@ function SignUp({ setPageIndex }: SignUpInterface) {
                 });
               } else {
                 toast({
-                  title: "SUCCESS",
+                  title: "ERROR",
                   description: getErrorDescription(data?.data?.message),
                   variant: "destructive",
                 });
@@ -135,7 +135,7 @@ function SignUp({ setPageIndex }: SignUpInterface) {
                 setTimeout(()=>{handleLoginClick();},500)
               } else {
                 toast({
-                  title: "SUCCESS",
+                  title: "ERROR",
                   description: getErrorDescription(data?.data?.message),
                   variant: "destructive",
                 });
@@ -292,21 +292,21 @@ function SignUp({ setPageIndex }: SignUpInterface) {
               </div>
             )}
           </div>
-          {step === 3 && (
-            <div className="mt-6 flex w-full flex-col gap-3 px-14">
-              <Input
-                className="pl-8"
-                icon="OTP"
-                placeholder={OTP}
-                error={errors?.otp?.message}
-                mandatory={
-                  watch("otp") && watch("otp")?.length === 6 ? false : true
-                }
-                onChange={handleOtpChange}
-                value={getValues("otp") ?? ""}
-              />
-            </div>
-          )}
+              {step === 3 && (
+                <div className="mt-6 flex w-full flex-col gap-3 px-14">
+                  <Input
+                    className="pl-8"
+                    icon="OTP"
+                    placeholder={OTP}
+                    error={errors?.otp?.message}
+                    mandatory={
+                      watch("otp") && watch("otp")?.length === 6 ? false : true
+                    }
+                    onChange={handleOtpChange}
+                    value={getValues("otp") ?? ""}
+                  />
+                </div>
+              )}
 
           <div className="mt-8 flex w-full items-center gap-6 px-16">
             <Button className="w-full" type="submit">

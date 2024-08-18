@@ -1,4 +1,3 @@
-
 import { ReactNode, createContext, useContext, useReducer } from "react";
 import { userType } from "../types/userTypes";
 
@@ -11,18 +10,19 @@ type contextType = {
   dispatch: React.Dispatch<dispatchDataType>;
   userData: userType;
   pageIndex: number;
-  todaySpendAmount: number
-  isLoading: boolean
+  todaySpendAmount: number;
+  isLoading: boolean;
+  loggedIn: boolean;
 };
 const initState: contextType = {
-  dispatch: () => { },
+  dispatch: () => {},
   userData: {
     emailId: "",
     mobilenumber: 0,
     password: "",
     firstName: "",
     lastName: "",
-    monthLimitAmount:0,
+    monthLimitAmount: 0,
     balance: 0,
     dailyLimit: 0,
     lastUpdatedDate: 0,
@@ -30,11 +30,13 @@ const initState: contextType = {
     todaySpends: [],
     totalSaved: 0,
     totalSpend: 0,
-    imageUrl: ""
+    imageUrl: "",
+    monthlySpends: [],
   },
   pageIndex: 0,
   todaySpendAmount: 0,
-  isLoading: false
+  isLoading: false,
+  loggedIn: false,
 };
 
 const contextProvider = createContext(initState);
@@ -44,24 +46,28 @@ function reducer(state: contextType, action: dispatchDataType) {
     case "setPageIndex":
       return {
         ...state,
-        pageIndex: action?.payload
+        pageIndex: action?.payload,
       };
     case "setIsLoading":
       return {
         ...state,
-        isLoading: action?.payload
-      }
+        isLoading: action?.payload,
+      };
     case "setUser":
-      return{
+      return {
         ...state,
-        userData:action?.payload
-      }
+        userData: action?.payload,
+      };
     case "setTodaySpendAmount":
       return {
         ...state,
-        todaySpendAmount:action?.payload
-      }
-
+        todaySpendAmount: action?.payload,
+      };
+    case "setLoggedIn":
+      return {
+        ...state,
+        loggedIn: action?.payload,
+      };
 
     default:
       throw new Error("Action unkonwn");
@@ -69,14 +75,20 @@ function reducer(state: contextType, action: dispatchDataType) {
 }
 
 export default function AppContext({ children }: { children: ReactNode }) {
-  const [{ userData, pageIndex, todaySpendAmount, isLoading }, dispatch] = useReducer(reducer, initState);
+  const [
+    { userData, pageIndex, todaySpendAmount, isLoading, loggedIn },
+    dispatch,
+  ] = useReducer(reducer, initState);
 
   return (
     <contextProvider.Provider
       value={{
         dispatch,
         userData,
-        pageIndex, todaySpendAmount, isLoading
+        pageIndex,
+        todaySpendAmount,
+        isLoading,
+        loggedIn,
       }}
     >
       {children}

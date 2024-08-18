@@ -7,7 +7,7 @@ export function getTodayDate(): number {
   return new Date().getDate();
 }
 export function useGetMe() {
-  const emailId = "afrdayan01@gmail.com";
+  const emailId = getLocalStorageItem("emailId");
   return { emailId };
 }
 
@@ -47,7 +47,22 @@ export function getErrorDescription(errorMessage: string) {
       return "Please provide a valid image URL.";
     case "INVALID_EMAIL":
       return "The email address provided is invalid.";
+    case "WRONG_PASSWORD":
+      return "Wrong password entered!";
     default:
       return "An unknown error occurred. Please contact support.";
   }
 }
+
+export function setLocalStorageItem(key: string, value: string) {
+  localStorage?.setItem(key, value);
+}
+
+export function getLocalStorageItem(key: string):string | null {
+  return localStorage?.getItem(key);
+}
+
+export function deleteLocalStorageItem(key: string) {
+  localStorage?.removeItem(key);
+}
+      

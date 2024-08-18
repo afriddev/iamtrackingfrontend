@@ -3,7 +3,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 
 function LoginMain() {
-  const [pageIndex, setPageIndex] = useState<number>(1);
+  const [pageIndex, setPageIndex] = useState<number>(0);
 
   function handlePageIndexChange(index: number) {
     setPageIndex(index);
@@ -18,3 +18,4 @@ function LoginMain() {
 }
 
 export default LoginMain;
+  
