@@ -102,7 +102,7 @@ function Login({ setPageIndex }: LoginInterface) {
             loginUser(
               {
                 emailId: userName,
-                password,
+                password:btoa(password),
               },
               {
                 onSuccess(data) {
