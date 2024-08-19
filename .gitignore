@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 
 index.html
+package-lock.json
