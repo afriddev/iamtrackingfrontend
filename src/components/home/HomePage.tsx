@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import NavBar from "../re/NavBar";
 import SetMonthLimit from "./SetMonthLimit";
 import { useAppContext } from "../../utils/AppContext";
-import { useGetAndSetUserData } from "../../hooks/userHooks";
+import { useGetAndSetUserData, useRunJob } from "../../hooks/userHooks";
 import Spinner from "../../utils/Spinner";
 import TodayStatistics from "./TodayStatistics";
-import { useGetMe } from "@/utils/utils";
+import { getLocalStorageItem, useGetMe } from "@/utils/utils";
 
 interface HomePageInterface {
   setPageNumber: (pageNumber: number) => void;
@@ -15,14 +15,31 @@ function HomePage({ setPageNumber }: HomePageInterface) {
   const { userData } = useAppContext();
   const { getUserData, isPending } = useGetAndSetUserData();
   const { emailId } = useGetMe();
+  const { runJob,isPending:runningJob} = useRunJob() 
 
   useEffect(() => {
     getUserData({
       emailId:emailId  as never
     });
+    if (emailId || getLocalStorageItem("emailId")) {
+      runJob({
+        emailId:emailId ?? getLocalStorageItem("emailId") as never
+      }, {
+        onSuccess(data) {
+          if (data?.data?.message === "AMOUNT_UPDATED") {
+            getUserData({
+              emailId:emailId  as never
+            });
+        
+          }
+          
+        },
+      })
+    }
+
   }, []);
 
-  if (isPending) return <Spinner loadingState={isPending} />;
+  if (isPending || runningJob) return <Spinner loadingState={isPending} />;
 
   return (
     <div className="px-2 py-2 ">

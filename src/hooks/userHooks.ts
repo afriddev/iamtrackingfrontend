@@ -3,6 +3,7 @@ import {
   createUserAPI,
   getUserDataAPI,
   loginUserAPI,
+  runJobAPI,
   sendOtpAPI,
   setMonthlyAmountAPI,
   updateDailySpendAmountAPI,
@@ -53,7 +54,7 @@ export function useSetMonthlyAmount() {
     mutate: setMonthlyAmount,
   } = useMutation({
     mutationFn: ({ amount }: { amount: number }) =>
-      setMonthlyAmountAPI({ emailId, amount }),
+      setMonthlyAmountAPI({ emailId:emailId as never, amount }),
   });
   return {
     isPending,
@@ -75,7 +76,7 @@ export function useUpdateDailySpendAMount() {
     }: {
       amount: number;
       type: "GROCERY" | "NORMAL";
-    }) => updateDailySpendAmountAPI({ emailId, amount, type }),
+    }) => updateDailySpendAmountAPI({ emailId:emailId as never, amount, type }),
   });
   return {
     isPending,
@@ -121,4 +122,19 @@ export function useLoginUser() {
     }) => loginUserAPI({ emailId, password }),
   });
   return { loginUser, isPending, data };
+}
+
+export function useRunJob() {
+  const {
+    mutate: runJob,
+    isPending,
+    data,
+  } = useMutation({
+    mutationFn: ({
+      emailId,
+    }: {
+      emailId: string;
+    }) => runJobAPI(emailId),
+  });
+  return { runJob, isPending, data };
 }

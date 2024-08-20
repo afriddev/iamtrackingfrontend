@@ -1,8 +1,8 @@
 import { createUserType } from "@/types/userTypes";
 import axios from "axios";
 
-const BASE_URL = "https://iamtrackingbackend.vercel.app/api/";
-// const BASE_URL = "http://localhost:3000/api/";
+// const BASE_URL = "https://dailytrackingapi.vercel.app/api/";
+const BASE_URL = "http://localhost:3000/api/";
 
 function postAPI(url: string, data: any) {
   return axios(`${BASE_URL}${url}`, {
@@ -44,4 +44,9 @@ export function createUserAPI(data: createUserType) {
 
 export function loginUserAPI(data: {emailId:string,password:string}) {
   return postAPI("login", data);
+}
+
+export function runJobAPI(emailId: string) {
+  return postAPI("runjob", {emailId})
+  
 }
