@@ -19,7 +19,7 @@ export type userType = {
   dailyLimit: number;
   totalSaved: number;
   imageUrl: string;
-  monthlySpends: {
+  dailySpends: {
     id: string;
     amount: number;
     response: string;
@@ -32,5 +32,5 @@ export type createUserType = {
   lastName?: string;
   emailId: string;
   password: string;
-  mobileNumber?: string;
+  mobileNumber?: string;    
 };

@@ -31,7 +31,7 @@ const initState: contextType = {
     totalSaved: 0,
     totalSpend: 0,
     imageUrl: "",
-    monthlySpends: [],
+    dailySpends: [],
   },
   pageIndex: 0,
   todaySpendAmount: 0,

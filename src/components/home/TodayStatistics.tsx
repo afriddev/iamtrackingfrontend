@@ -1,3 +1,13 @@
+import {
+  useGetAndSetUserData,
+  useUpdateDailySpendAMount,
+} from "@/hooks/userHooks";
+import Spinner from "@/utils/Spinner";
+import { useState } from "react";
+import { CiFaceFrown, CiSaveUp1 } from "react-icons/ci";
+import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
+import { IoTrendingUpSharp } from "react-icons/io5";
+import { MdTrendingDown } from "react-icons/md";
 import { useAppContext } from "../../utils/AppContext";
 import {
   AMOOUNT_ERROR,
@@ -15,20 +25,10 @@ import {
   TRANSACTION_HISTORY,
   UPDATE,
 } from "../../utils/constants";
-import { CiSaveUp1 } from "react-icons/ci";
-import { IoTrendingUpSharp } from "react-icons/io5";
-import { MdTrendingDown } from "react-icons/md";
-import Chart from "../re/Chart";
 import { daysInThisMonth, getTodayDate, useGetMe } from "../../utils/utils";
-import { Input } from "../ui/input";
+import Chart from "../re/Chart";
 import { Button } from "../ui/button";
-import { useState } from "react";
-import {
-  useGetAndSetUserData,
-  useUpdateDailySpendAMount,
-} from "@/hooks/userHooks";
-import Spinner from "@/utils/Spinner";
-import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
+import { Input } from "../ui/input";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 function TodayStatistics() {
@@ -66,7 +66,7 @@ function TodayStatistics() {
 
   function updateDailySpendAmmount() {
     if (!amountMessage) {
-      if(amount){
+      if (amount) {
         updateDailySpendAmount(
           {
             amount: amount as unknown as number,
@@ -79,15 +79,13 @@ function TodayStatistics() {
                 data?.data?.message === "DAILY_LIMIT_ERROR"
               ) {
                 setAmount("");
-                getUserData({ emailId });
+                getUserData({ emailId: emailId as never });
               }
             },
           },
         );
-      }
-      else{
-        setAmountMessage(AMOUNT_ERROR)
-
+      } else {
+        setAmountMessage(AMOUNT_ERROR);
       }
     }
   }
@@ -196,7 +194,7 @@ function TodayStatistics() {
               </label>
               {(selectedTransactionIndex === 0
                 ? userData?.todaySpends
-                : userData?.monthlySpends
+                : userData?.dailySpends
               )?.length > 0 ? (
                 <div className="flex max-h-[29vh] flex-col  gap-2  px-2">
                   <div className="flex max-w-[90vw]  items-center justify-between text-xs">
@@ -235,7 +233,7 @@ function TodayStatistics() {
                     <div className=" flex max-w-[90vw]  flex-col gap-3 pb-3">
                       {(selectedTransactionIndex === 0
                         ? userData?.todaySpends
-                        : userData?.monthlySpends
+                        : userData?.dailySpends
                       )?.map((item: any, index: number) => {
                         return (
                           <div
@@ -276,7 +274,12 @@ function TodayStatistics() {
                   </div>
                 </div>
               ) : (
-                <label className="pl-6 ">{NO_DATA_FOUND}</label>
+                <div className="flex w-full flex-col items-center justify-center gap-2">
+                  <a>
+                    <CiFaceFrown className="h-12 w-12 text-destructive/60" />
+                  </a>
+                  <label className="pl-6 ">{NO_DATA_FOUND}</label>
+                </div>
               )}
             </div>
           </div>
