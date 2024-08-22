@@ -25,6 +25,7 @@ export type userType = {
     response: string;
     date: string;
   }[];
+  groceryData:groceryData
 };
 
 export type createUserType = {
@@ -32,5 +33,23 @@ export type createUserType = {
   lastName?: string;
   emailId: string;
   password: string;
-  mobileNumber?: string;    
+  mobileNumber?: string;
+};
+
+export type groceryData = {
+  emailId: string;
+  groceryList: [groceryList];
+  lastUpdateDate: number;
+  todayDate: number;
+  notifications: [groceryList];
+  monthLyLimit: number;
+  monthLySpend: number;
+  notifyHalf: boolean;
+};
+
+export type groceryList = {
+  itemName: string;
+  pricePerKg: number;
+  requiredGmsPerWeek: number;
+  addedDate: number;
 };

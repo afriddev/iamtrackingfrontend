@@ -9,7 +9,7 @@ import {
 } from "../../utils/constants";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { useGetAndSetUserData, useSetMonthlyAmount } from "@/hooks/userHooks";
+import { useGetAndSetUserData, useGetUserGroceryData, useSetMonthlyAmount } from "@/hooks/userHooks";
 import Spinner from "@/utils/Spinner";
 import { useGetMe } from "@/utils/utils";
 
@@ -20,6 +20,7 @@ function SetMonthLimit() {
     useSetMonthlyAmount();
     const {getUserData,isPending:settingUserData} = useGetAndSetUserData()
   const {emailId} = useGetMe()
+  const {getUserGroceryData,isPending:gettingUserGroceryData} = useGetUserGroceryData()
 
   function handleChange(e: any) {
     const value = e?.target?.value;
@@ -42,7 +43,8 @@ function SetMonthLimit() {
         },{
           onSuccess(data) {
             if (data?.data?.message === "SUCCESS") {
-              getUserData({ emailId });
+              getUserData({ emailId:emailId as never });
+              getUserGroceryData({emailId:emailId as never})
             }
           },
         });
@@ -53,7 +55,7 @@ function SetMonthLimit() {
 
   return (
     <div>
-      <Spinner loadingState={isPending || settingUserData} />
+      <Spinner loadingState={isPending || settingUserData || gettingUserGroceryData} />
       <div className=" mt-6 flex w-full flex-col items-center justify-center">
         <img src="setMonthlyAmount.png" />
         <label className=" px-4 text-center text-xl ">

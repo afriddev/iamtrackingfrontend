@@ -32,6 +32,7 @@ const initState: contextType = {
     totalSpend: 0,
     imageUrl: "",
     dailySpends: [],
+    groceryData: {} as any,
   },
   pageIndex: 0,
   todaySpendAmount: 0,
@@ -67,6 +68,14 @@ function reducer(state: contextType, action: dispatchDataType) {
       return {
         ...state,
         loggedIn: action?.payload,
+      };
+    case "setGroceryData":
+      return {
+        ...state,
+        userData: {
+          ...state?.userData,
+          groceryData: action?.payload,
+        },
       };
 
     default:

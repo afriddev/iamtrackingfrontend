@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import {
   createUserAPI,
   getUserDataAPI,
+  getUserGroceryDataAPI,
   loginUserAPI,
   runJobAPI,
   sendOtpAPI,
@@ -138,3 +139,30 @@ export function useRunJob() {
   });
   return { runJob, isPending, data };
 }
+
+export function useGetUserGroceryData() {
+  const {dispatch} = useAppContext()
+  const {
+    mutate: getUserGroceryData,
+    isPending,
+    data,
+  } = useMutation({
+    mutationFn: ({
+      emailId,
+    }: {
+      emailId: string;
+    }) => getUserGroceryDataAPI(emailId),
+    onSettled(data) {
+      if(data?.data?.userGroceryData?.monthLyLimit > 0){
+        dispatch({
+          type:"setGroceryData",
+          payload:data?.data?.userGroceryData
+        })
+
+      }
+      
+    },
+  });
+  return { getUserGroceryData, isPending, data };
+}
+

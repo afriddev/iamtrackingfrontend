@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import NavBar from "../re/NavBar";
 import SetMonthLimit from "./SetMonthLimit";
 import { useAppContext } from "../../utils/AppContext";
-import { useGetAndSetUserData, useRunJob } from "../../hooks/userHooks";
+import { useGetAndSetUserData, useGetUserGroceryData, useRunJob } from "../../hooks/userHooks";
 import Spinner from "../../utils/Spinner";
 import TodayStatistics from "./TodayStatistics";
 import { getLocalStorageItem, useGetMe } from "@/utils/utils";
@@ -16,12 +16,14 @@ function HomePage({ setPageNumber }: HomePageInterface) {
   const { getUserData, isPending } = useGetAndSetUserData();
   const { emailId } = useGetMe();
   const { runJob,isPending:runningJob} = useRunJob() 
+  const {getUserGroceryData,isPending:settingUserGroceryData} = useGetUserGroceryData()
 
   useEffect(() => {
-    getUserData({
-      emailId:emailId  as never
-    });
+    
     if (emailId || getLocalStorageItem("emailId")) {
+      getUserData({
+        emailId:emailId ?? getLocalStorageItem("emailId") as never
+      });
       runJob({
         emailId:emailId ?? getLocalStorageItem("emailId") as never
       }, {
@@ -35,11 +37,14 @@ function HomePage({ setPageNumber }: HomePageInterface) {
           
         },
       })
+      getUserGroceryData({
+        emailId:emailId ?? getLocalStorageItem("emailId") as never
+      })
     }
 
   }, []);
 
-  if (isPending || runningJob) return <Spinner loadingState={isPending} />;
+  if (isPending || runningJob || settingUserGroceryData) return <Spinner loadingState={isPending} />;
 
   return (
     <div className="px-2 py-2 ">
