@@ -5,11 +5,11 @@ import { SAVINGS, LIMIT, SPENDS } from "../../utils/constants";
 
 interface ChartInterface {
   chartType: "PIE";
-  page: "STATISTICS"
+  page: "STATISTICS";
 }
 
 function Chart({ chartType, page }: ChartInterface) {
-  const { pageIndex, userData, todaySpendAmount } = useAppContext();
+  const { pageIndex, userData, todaySpends } = useAppContext();
   const [pieData, setPieData] = useState<
     { id: number; value: number; label: string; color?: string }[]
   >([]);
@@ -30,29 +30,33 @@ function Chart({ chartType, page }: ChartInterface) {
           }[] = [];
           temp.push({
             id: 0,
-            value: Math.floor(userData?.dailyLimit)     ,
+            value: Math.floor(userData?.dailyLimit),
             label: `${LIMIT} (${Math.floor(userData?.dailyLimit)})`,
             color: "#7600b5",
           });
-          if (todaySpendAmount > 1) {
+          if (todaySpends > 1) {
             temp.push({
               id: 1,
-              value: todaySpendAmount,
-              label: `${SPENDS} (${todaySpendAmount})`,
+              value: todaySpends,
+              label: `${SPENDS} (${todaySpends})`,
               color: "#55f540",
             });
           }
           temp.push({
             id: 2,
-            value:
-            Math.floor(userData?.dailyLimit - todaySpendAmount >= 0
-                ? parseFloat((userData?.dailyLimit - todaySpendAmount).toFixed(1))
-                : parseFloat(((userData?.dailyLimit - todaySpendAmount) * -1).toFixed(1))),
-            label: `${SAVINGS} (${Math.floor(userData?.dailyLimit - todaySpendAmount >= 0
-              ? parseFloat((userData?.dailyLimit - todaySpendAmount).toFixed(1))
-              : parseFloat(((userData?.dailyLimit - todaySpendAmount) * -1).toFixed(1)))})`,
-            color:
-              todaySpendAmount >= userData?.dailyLimit ? "#f7746a" : "#55f540",
+            value: Math.floor(
+              userData?.dailyLimit - todaySpends >= 0
+                ? parseFloat((userData?.dailyLimit - todaySpends).toFixed(1))
+                : parseFloat(
+                    ((userData?.dailyLimit - todaySpends) * -1).toFixed(1),
+                  ),
+            ),
+            label: `${SAVINGS} (${Math.floor(
+              userData?.dailyLimit - todaySpends >= 0
+                ? (`+${parseFloat((userData?.dailyLimit - todaySpends).toFixed(1))}` as unknown as number)
+                : (`-${parseFloat(((userData?.dailyLimit - todaySpends) * -1).toFixed(1))}` as unknown as number),
+            )})`,
+            color: todaySpends >= userData?.dailyLimit ? "#f7746a" : "#55f540",
           });
           setPieData(temp);
         }
@@ -67,8 +71,8 @@ function Chart({ chartType, page }: ChartInterface) {
   return (
     <div className="h-[30vh] w-[97vw]">
       <div className="h-[30vh] w-[97vw] drop-shadow-xl">
-        {
-          chartType === 'PIE' && <PieChart
+        {chartType === "PIE" && (
+          <PieChart
             className="h-[30vh] w-[97vw]"
             series={[
               {
@@ -82,7 +86,7 @@ function Chart({ chartType, page }: ChartInterface) {
                 arcLabel: (item) => {
                   if (
                     item?.id === 2 &&
-                    userData?.dailyLimit - todaySpendAmount < 0
+                    userData?.dailyLimit - todaySpends < 0
                   ) {
                     return `- ${item?.value}`;
                   }
@@ -98,7 +102,7 @@ function Chart({ chartType, page }: ChartInterface) {
               },
             }}
           />
-        }
+        )}
       </div>
     </div>
   );

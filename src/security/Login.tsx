@@ -77,7 +77,7 @@ function Login({ setPageIndex }: LoginInterface) {
             {
               onSuccess(data) {
                 if (data?.data?.message === "SUCCESS") {
-                  setLoginOtp(parseInt(data?.data?.otp));
+                  setLoginOtp(data?.data?.otp);
                   setStep(1);
                   if (data?.data?.message === "SUCCESS") {
                     toast({
@@ -131,6 +131,7 @@ function Login({ setPageIndex }: LoginInterface) {
               },
             );
           } else {
+            console.log(otp,loginOtp)
             setOtpError(INVALID_OTP);
           }
         }

@@ -12,10 +12,9 @@ interface NavBarInterface {
 }
 
 function NavBar({ setPageNumber }: NavBarInterface) {
-  const { userData, todaySpendAmount } = useAppContext();
+  const { userData, balance,todaySpends } = useAppContext();
   const [prevAmount, stePrevAmount] = useState<boolean>(false);
-  const balance = userData?.balance;
-  const minimizedSpends = userData?.dailyLimit > todaySpendAmount;
+  const minimizedSpends = userData?.dailyLimit > todaySpends;
 
   function handlePrevChange(value: boolean) {
     if (value && prevAmount) {
@@ -67,7 +66,7 @@ function NavBar({ setPageNumber }: NavBarInterface) {
               <li className="flex flex-col">
                 <div
                   className={` ${
-                    todaySpendAmount >= userData?.dailyLimit
+                    todaySpends >= userData?.dailyLimit
                       ? "text-red-500"
                       : "text-green-500"
                   } w-full flex items-center gap-2`}
@@ -78,7 +77,7 @@ function NavBar({ setPageNumber }: NavBarInterface) {
                     {SPENDS}
                     <span className="text-black">{":"}</span>
                   </label>
-                  <a>{todaySpendAmount}</a>
+                  <a>{todaySpends}</a>
                 </div>
                 <div className="w-full flex items-center gap-2">
                   <label className="w-[12vw] flex justify-between items-center">

@@ -12,7 +12,7 @@ interface HomePageInterface {
 }
 
 function HomePage({ setPageNumber }: HomePageInterface) {
-  const { userData } = useAppContext();
+  const { userData ,loggedIn} = useAppContext();
   const { getUserData, isPending } = useGetAndSetUserData();
   const { emailId } = useGetMe();
   const { runJob,isPending:runningJob} = useRunJob() 
@@ -20,7 +20,7 @@ function HomePage({ setPageNumber }: HomePageInterface) {
 
   useEffect(() => {
     
-    if (emailId || getLocalStorageItem("emailId")) {
+    if (emailId || getLocalStorageItem("emailId") || loggedIn) {
       getUserData({
         emailId:emailId ?? getLocalStorageItem("emailId") as never
       });
@@ -42,7 +42,8 @@ function HomePage({ setPageNumber }: HomePageInterface) {
       })
     }
 
-  }, []);
+  }, [loggedIn]);
+  
 
   if (isPending || runningJob || settingUserGroceryData) return <Spinner loadingState={isPending} />;
 
@@ -56,7 +57,7 @@ function HomePage({ setPageNumber }: HomePageInterface) {
         <div className="flex h-full min-h-[80vh] items-center justify-center">
           <SetMonthLimit />
         </div>
-      )}
+      )} 
 
       <div>{userData?.monthLimitAmount >= 500 && <TodayStatistics />}</div>
     </div>

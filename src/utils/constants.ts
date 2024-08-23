@@ -53,3 +53,8 @@ export const ACCOUNT_CREATED_SUCCESS = "Account created successfully";
 export const OTP_SEND_SUCCESS = "Otp send successfully";
 export const BACK = "Back";
 export const LOGGED_IN_SUCCESS = "Logged in successfully";
+export const ENTER_MONTHLY_CHARGES = "Please enter your monthly charges."
+export const ENTER_MONTHLY_GROCERY_AMOUNT = "Please enter your monthly grocery amount"
+export const ENTER_MONTHLY_EXTRA_SPENDS = "Please enter your monthly extra spends"
+
+export const AMOUNT_SET_SUCCESS = 'Monthly amount configured'

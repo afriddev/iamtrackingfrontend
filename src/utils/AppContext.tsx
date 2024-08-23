@@ -8,36 +8,23 @@ export type dispatchDataType = {
 
 type contextType = {
   dispatch: React.Dispatch<dispatchDataType>;
-  userData: userType;
-  pageIndex: number;
-  todaySpendAmount: number;
   isLoading: boolean;
   loggedIn: boolean;
+  pageIndex: number;
+  userData: userType;
+  totalSpendAmount: number;
+  balance: number;
+  todaySpends:number
 };
 const initState: contextType = {
   dispatch: () => {},
-  userData: {
-    emailId: "",
-    mobilenumber: 0,
-    password: "",
-    firstName: "",
-    lastName: "",
-    monthLimitAmount: 0,
-    balance: 0,
-    dailyLimit: 0,
-    lastUpdatedDate: 0,
-    todayDate: 0,
-    todaySpends: [],
-    totalSaved: 0,
-    totalSpend: 0,
-    imageUrl: "",
-    dailySpends: [],
-    groceryData: {} as any,
-  },
-  pageIndex: 0,
-  todaySpendAmount: 0,
   isLoading: false,
   loggedIn: false,
+  pageIndex: 0,
+  userData: undefined as any,
+  totalSpendAmount: 0,
+  balance: 0,
+  todaySpends:0
 };
 
 const contextProvider = createContext(initState);
@@ -59,10 +46,12 @@ function reducer(state: contextType, action: dispatchDataType) {
         ...state,
         userData: action?.payload,
       };
-    case "setTodaySpendAmount":
+    case "setTotalSpendAmount":
       return {
         ...state,
-        todaySpendAmount: action?.payload,
+        totalSpendAmount: action?.payload?.totalSpendAmount,
+        balance:action?.payload?.balance,
+        todaySpends:action?.payload?.todaySpends
       };
     case "setLoggedIn":
       return {
@@ -85,7 +74,7 @@ function reducer(state: contextType, action: dispatchDataType) {
 
 export default function AppContext({ children }: { children: ReactNode }) {
   const [
-    { userData, pageIndex, todaySpendAmount, isLoading, loggedIn },
+    { userData, pageIndex, totalSpendAmount, balance, isLoading, loggedIn,todaySpends },
     dispatch,
   ] = useReducer(reducer, initState);
 
@@ -95,9 +84,11 @@ export default function AppContext({ children }: { children: ReactNode }) {
         dispatch,
         userData,
         pageIndex,
-        todaySpendAmount,
+        totalSpendAmount,
+        balance,
         isLoading,
         loggedIn,
+        todaySpends
       }}
     >
       {children}

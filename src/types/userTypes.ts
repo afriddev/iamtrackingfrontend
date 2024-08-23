@@ -6,6 +6,7 @@ export type userType = {
   lastName?: string;
   todayDate: number;
   lastUpdatedDate: number;
+  imageUrl: string;
   monthLimitAmount: number;
   todaySpends: {
     id: string;
@@ -14,11 +15,7 @@ export type userType = {
     date: string;
     type: "Normal" | "Grocery";
   }[];
-  balance: number;
-  totalSpend: number;
   dailyLimit: number;
-  totalSaved: number;
-  imageUrl: string;
   dailySpends: {
     id: string;
     amount: number;
@@ -38,13 +35,14 @@ export type createUserType = {
 
 export type groceryData = {
   emailId: string;
-  groceryList: [groceryList];
   lastUpdateDate: number;
   todayDate: number;
+  groceryList: [groceryList];
   notifications: [groceryList];
-  monthLyLimit: number;
-  monthLySpend: number;
   notifyHalf: boolean;
+  monthLyGroceryAmount:number
+  missedGroceryList: [groceryList],
+  todayGroceryList: [groceryList],
 };
 
 export type groceryList = {

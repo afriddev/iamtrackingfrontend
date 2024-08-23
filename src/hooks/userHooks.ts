@@ -28,18 +28,34 @@ export function useGetAndSetUserData() {
           payload: data?.data?.user,
         });
       }
-      let todaySpendAmount = 0;
+      let totalSpendAmount = 0;
+      let todaySpends = 0;
       for (
         let index = 0;
         index < data?.data?.user?.todaySpends?.length;
         index++
       ) {
-        todaySpendAmount =
-          todaySpendAmount + data?.data?.user?.todaySpends[index]?.amount;
+        totalSpendAmount =
+          totalSpendAmount + data?.data?.user?.todaySpends[index]?.amount;
+        todaySpends =
+          todaySpends + data?.data?.user?.todaySpends[index]?.amount;
       }
+      for (
+        let index = 0;
+        index < data?.data?.user?.dailySpends?.length;
+        index++
+      ) {
+        totalSpendAmount =
+          totalSpendAmount + data?.data?.user?.dailySpends[index]?.amount;
+      }
+
       dispatch({
-        type: "setTodaySpendAmount",
-        payload: todaySpendAmount,
+        type: "setTotalSpendAmount",
+        payload: {
+          totalSpendAmount,
+          balance: data?.data?.user?.monthLimitAmount - totalSpendAmount,
+          todaySpends,
+        },
       });
     },
   });
@@ -54,8 +70,8 @@ export function useSetMonthlyAmount() {
     data,
     mutate: setMonthlyAmount,
   } = useMutation({
-    mutationFn: ({ amount }: { amount: number }) =>
-      setMonthlyAmountAPI({ emailId:emailId as never, amount }),
+    mutationFn: (amount: any) =>
+      setMonthlyAmountAPI({ emailId: emailId as never, ...amount }),
   });
   return {
     isPending,
@@ -77,7 +93,8 @@ export function useUpdateDailySpendAMount() {
     }: {
       amount: number;
       type: "GROCERY" | "NORMAL";
-    }) => updateDailySpendAmountAPI({ emailId:emailId as never, amount, type }),
+    }) =>
+      updateDailySpendAmountAPI({ emailId: emailId as never, amount, type }),
   });
   return {
     isPending,
@@ -131,38 +148,28 @@ export function useRunJob() {
     isPending,
     data,
   } = useMutation({
-    mutationFn: ({
-      emailId,
-    }: {
-      emailId: string;
-    }) => runJobAPI(emailId),
+    mutationFn: ({ emailId }: { emailId: string }) => runJobAPI(emailId),
   });
   return { runJob, isPending, data };
 }
 
 export function useGetUserGroceryData() {
-  const {dispatch} = useAppContext()
+  const { dispatch } = useAppContext();
   const {
     mutate: getUserGroceryData,
     isPending,
     data,
   } = useMutation({
-    mutationFn: ({
-      emailId,
-    }: {
-      emailId: string;
-    }) => getUserGroceryDataAPI(emailId),
+    mutationFn: ({ emailId }: { emailId: string }) =>
+      getUserGroceryDataAPI(emailId),
     onSettled(data) {
-      if(data?.data?.userGroceryData?.monthLyLimit > 0){
+      if (data?.data?.userGroceryData?.monthLyLimit > 0) {
         dispatch({
-          type:"setGroceryData",
-          payload:data?.data?.userGroceryData
-        })
-
+          type: "setGroceryData",
+          payload: data?.data?.userGroceryData,
+        });
       }
-      
     },
   });
   return { getUserGroceryData, isPending, data };
 }
-

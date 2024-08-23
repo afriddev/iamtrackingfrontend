@@ -9,6 +9,9 @@ import { FaAsterisk } from "react-icons/fa";
 import { FiUser, FiUserPlus } from "react-icons/fi";
 import { MdOutlineEmail, MdOutlinePhone } from "react-icons/md";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
+import { MdEmojiTransportation } from "react-icons/md";
+import { FaBowlRice } from "react-icons/fa6";
+import { MdCalendarViewMonth } from "react-icons/md";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
@@ -49,6 +52,18 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           return (
             <MdOutlinePhone className="absolute left-2 top-[0.7rem] h-[0.8rem] w-[0.8rem] text-primary" />
           );
+        case "TRANSPORT":
+          return (
+            <MdEmojiTransportation className="absolute left-2 top-[0.5rem] h-[1rem] w-[1rem] text-primary" />
+          );
+        case "RICE":
+          return (
+            <FaBowlRice className="absolute left-2 top-[0.7rem] h-[0.8rem] w-[0.8rem] text-primary " />
+          );
+        case "MONTH":
+          return (
+            <MdCalendarViewMonth className="absolute left-2 top-[0.7rem] h-[0.8rem] w-[0.8rem] text-primary " />
+          );
       }
     }
 
@@ -67,7 +82,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {mandatory === true && (
-            <FaAsterisk className=" absolute  -right-5 h-3   w-3 text-destructive" />
+            <FaAsterisk className=" absolute  -right-5 h-3  w-3 text-destructive" />
           )}
           {mandatory === false && (
             <RiVerifiedBadgeFill className=" absolute  -right-6 h-4 w-4 text-constructive" />
