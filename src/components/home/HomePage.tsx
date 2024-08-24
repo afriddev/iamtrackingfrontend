@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import NavBar from "../re/NavBar";
+import NavBar from "../reusable/NavBar";
 import SetMonthLimit from "./SetMonthLimit";
 import { useAppContext } from "../../utils/AppContext";
 import {

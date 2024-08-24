@@ -26,7 +26,7 @@ import {
   UPDATE,
 } from "../../utils/constants";
 import { daysInThisMonth, getTodayDate, useGetMe } from "../../utils/utils";
-import Chart from "../re/Chart";
+import Chart from "../reusable/Chart";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
