@@ -14,7 +14,11 @@ import { FaBowlRice } from "react-icons/fa6";
 import { MdCalendarViewMonth } from "react-icons/md";
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+    error?:string,
+    icon?:string,
+    mandatory?:boolean
+  }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, error, icon, mandatory, ...props }, ref) => {
