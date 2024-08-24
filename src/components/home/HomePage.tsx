@@ -106,7 +106,7 @@ function HomePage({ setPageNumber }: HomePageInterface) {
           </div>
         </div>
 
-        {userData?.monthLimitAmount >= 500 && <TodayStatistics />}
+        {userData?.monthLimitAmount >= 500 && tabIndex === 0 && <TodayStatistics />}
       </div>
     </div>
   );
