@@ -56,5 +56,5 @@ export const LOGGED_IN_SUCCESS = "Logged in successfully";
 export const ENTER_MONTHLY_CHARGES = "Please enter your monthly charges."
 export const ENTER_MONTHLY_GROCERY_AMOUNT = "Please enter your monthly grocery amount"
 export const ENTER_MONTHLY_EXTRA_SPENDS = "Please enter your monthly extra spends"
-
 export const AMOUNT_SET_SUCCESS = 'Monthly amount configured'
+export const CHARGES = "Charges"

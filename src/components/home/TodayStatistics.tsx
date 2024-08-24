@@ -32,10 +32,10 @@ import { Input } from "../ui/input";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 function TodayStatistics() {
-  const { userData, todaySpendAmount } = useAppContext();
+  const { userData, todaySpends } = useAppContext();
   const minimizedSpends =
     (userData?.monthLimitAmount / daysInThisMonth()) * getTodayDate() >
-    todaySpendAmount;
+    todaySpends;
   const [amountMessage, setAmountMessage] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
   const { isPending, updateDailySpendAmount } = useUpdateDailySpendAMount();
@@ -229,7 +229,7 @@ function TodayStatistics() {
                       </div>
                     </div>
                   </div>
-                  <div className=" max-h-[32vh] overflow-auto">
+                  <div className="max-h-[20vh] overflow-auto">
                     <div className=" flex max-w-[90vw]  flex-col gap-3 pb-3">
                       {(selectedTransactionIndex === 0
                         ? userData?.todaySpends
