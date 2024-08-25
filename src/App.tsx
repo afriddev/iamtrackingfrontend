@@ -8,6 +8,7 @@ import LoginMain from "./security/LoginMain";
 import { Toaster } from "@/components/ui/toaster";
 import { getLocalStorageItem } from "./utils/utils";
 
+
 export default function App() {
   const queryClient = new QueryClient();
   const [pageindex, setPageIndex] = useState<number>(0);
@@ -38,7 +39,6 @@ export default function App() {
         <div className="absolute  z-[1] h-[100vh] w-[100vw] ">
           <img src="beams.jpg" className="h-full w-full object-cover" />
         </div>
-
         {!userLoggedIn && (
           <div className="relative top-1 z-[2] w-[100vw]">
             <LoginMain />

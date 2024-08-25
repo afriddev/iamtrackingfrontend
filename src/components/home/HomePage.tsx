@@ -58,7 +58,7 @@ function HomePage({ setPageNumber }: HomePageInterface) {
     return <Spinner loadingState={isPending} />;
 
   return (
-    <div className="px-2 py-2 ">
+    <div className="px-2 py-2">
       <div className=" p-1">
         <NavBar setPageNumber={setPageNumber} />
       </div>

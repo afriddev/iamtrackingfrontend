@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useContext, useReducer } from "react";
-import { userType } from "../types/userTypes";
+import { userType } from "@/types/userTypes";
 
 export type dispatchDataType = {
   type: string;
