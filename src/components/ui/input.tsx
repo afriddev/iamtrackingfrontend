@@ -12,6 +12,7 @@ import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { MdEmojiTransportation } from "react-icons/md";
 import { FaBowlRice } from "react-icons/fa6";
 import { MdCalendarViewMonth } from "react-icons/md";
+import { RiWeightLine } from "react-icons/ri";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -68,6 +69,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           return (
             <MdCalendarViewMonth className="absolute left-2 top-[0.7rem] h-[0.8rem] w-[0.8rem] text-primary " />
           );
+          case "WEIGHT":
+            return (
+              <RiWeightLine className="absolute left-2 top-[0.7rem] h-[0.8rem] w-[0.8rem] text-primary " />
+            );
       }
     }
 

@@ -105,7 +105,7 @@ function TodayStatistics() {
   }
 
   return (
-    <div>
+    <div className="px-2">
       <Spinner loadingState={isPending || settingUserData} />
       {userData?.monthLimitAmount >= 500 && (
         <div className="flex w-full flex-col">

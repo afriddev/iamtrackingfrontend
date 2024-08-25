@@ -59,19 +59,19 @@ function HomePage({ setPageNumber }: HomePageInterface) {
     return <Spinner loadingState={isPending} />;
 
   return (
-    <div className="px-2 py-2">
-      <div className=" p-1">
+    <div className="">
+      <div className="px-2 py-2">
         <NavBar setPageNumber={setPageNumber} />
       </div>
 
       {userData?.monthLimitAmount < 500 && (
-        <div className="flex h-full min-h-[80vh] items-center justify-center">
+        <div className="flex h-full min-h-[80vh] items-center justify-center px-2 py-2">
           <SetMonthLimit />
         </div>
       )}
 
-      <div>
-        <div className="flex w-full justify-between gap-4 pb-3 pt-4">
+      <div className=" py-2">
+        <div className="flex w-full justify-between gap-4 pb-3 pt-4 px-2">
           <div
             onClick={() => {
               handleTabIndex(0);
@@ -94,7 +94,7 @@ function HomePage({ setPageNumber }: HomePageInterface) {
               className={`${tabIndex === 1 && "absolute bottom-0 h-[0.15rem] w-full rounded-b-lg bg-primary "}`}
             ></div>
           </div>
-        
+
           <div
             onClick={() => {
               handleTabIndex(2);
@@ -108,9 +108,13 @@ function HomePage({ setPageNumber }: HomePageInterface) {
           </div>
         </div>
 
-        {userData?.monthLimitAmount >= 500 && tabIndex === 0 && <TodayStatistics />}
+        {userData?.monthLimitAmount >= 500 && tabIndex === 0 && (
+          <TodayStatistics />
+        )}
         <div className="mt-10">
-        {userData?.monthLimitAmount >=500 && tabIndex === 1 && <TodayGrocery />}
+          {userData?.monthLimitAmount >= 500 && tabIndex === 1 && (
+            <TodayGrocery />
+          )}
         </div>
       </div>
     </div>

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import AppDialog from "@/utils/appUtils/AppDialog";
 import { Input } from "@/components/ui/input";
-import AppInputErrors from "@/errors/AppInputErrors";
 import { useForm } from "react-hook-form";
 import { useConfiggrocerylist } from "@/hooks/userHooks";
 import Spinner from "@/utils/Spinner";
@@ -12,7 +11,6 @@ import {
   GMSPER_WEEK_FVM,
   ITEM_ADDED_SUCCESSFULLY,
   PRICE_FVM,
-  SELECT_GROCERYS,
   ITEM_ADDED_FAILED,
   ADD_ITEM,
   SUBMIT,
@@ -54,44 +52,51 @@ function TodayGrocery() {
       },
     });
   }
+  function closeDialog(){
+    setShowDialog(false)
+  }
 
   return (
     <div>
       <Spinner loadingState={isPending} />
-      <Button onClick={handleClick}>{ADD_ITEM}</Button>
+      <div className="px-2"><Button onClick={handleClick}>{ADD_ITEM}</Button></div>
       {showDialog && (
-        <AppDialog title={ADD_GROCERY_ITEM}>
+        <AppDialog closeMe={closeDialog} title={ADD_GROCERY_ITEM}>
           <div>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col gap-2"
+              className="flex flex-col gap-3 w-[70vw]"
             >
               <div>
-                <AppInputErrors error={errors?.itemName?.message}>
-                  <Input
-                    {...register("itemName", { required: ITEM_FVM })}
-                    type="text"
-                    placeholder={ITEM_FVM}
-                  />
-                </AppInputErrors>
+                <Input
+                  error={errors?.itemName?.message}
+                  {...register("itemName", { required: ITEM_FVM })}
+                  type="text"
+                  placeholder={ITEM_FVM}
+                  icon="RICE"
+                />
               </div>
               <div>
-                <AppInputErrors error={errors?.pricePerKg?.message}>
-                  <Input
-                    {...register("pricePerKg", { required: PRICE_FVM })}
-                    placeholder={PRICE_FVM}
-                  />
-                </AppInputErrors>
+                <Input
+                  error={errors?.pricePerKg?.message}
+                  {...register("pricePerKg", {
+                    required: PRICE_FVM,
+                    pattern: /^\d+$/,
+                  })}
+                  placeholder={PRICE_FVM}
+                  icon="AMOUNT"
+                />
               </div>
               <div>
-                <AppInputErrors error={errors?.requiredGmsPerWeek?.message}>
-                  <Input
-                    {...register("requiredGmsPerWeek", {
-                      required: GMSPER_WEEK_FVM,
-                    })}
-                    placeholder={GMSPER_WEEK_FVM}
-                  />
-                </AppInputErrors>
+                <Input
+                  error={errors?.requiredGmsPerWeek?.message}
+                  icon="WEIGHT"
+                  {...register("requiredGmsPerWeek", {
+                    required: GMSPER_WEEK_FVM,
+                    pattern: /^\d+$/,
+                  })}
+                  placeholder={GMSPER_WEEK_FVM}
+                />
               </div>
               <div className=" mt-6 grid grid-cols-2 gap-4 ">
                 <Button type="submit">{SUBMIT}</Button>
