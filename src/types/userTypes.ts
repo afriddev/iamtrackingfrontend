@@ -2,7 +2,7 @@ export type userType = {
   emailId: string;
   mobilenumber: number;
   password: string;
-  fisrtName: string;
+  firstName: string;
   lastName?: string;
   todayDate: number;
   lastUpdatedDate: number;

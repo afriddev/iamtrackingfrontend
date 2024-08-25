@@ -62,7 +62,7 @@ function NavBar({ setPageNumber }: NavBarInterface) {
             )}
           </div>
           {prevAmount && (
-            <div className=" w-full h-fit drop-shadow-2xl rounded-b-md bg-white p-2 text-[12px] absolute  ">
+            <div className=" w-full h-fit drop-shadow-2xl rounded-b-md bg-white p-2 text-[12px] absolute z-[99]  ">
               <li className="flex flex-col">
                 <div
                   className={` ${
