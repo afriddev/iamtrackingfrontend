@@ -60,8 +60,10 @@ export const AMOUNT_SET_SUCCESS = 'Monthly amount configured'
 export const CHARGES = "Charges"
 
 //Form constances 
-export const SELECT_GROCERYS = "Select your Grocerys"
- export const ITEM_FVM = "Enter Your Item"
-export const PRICE_FVM = "Enter Your Price"
-export const GMSPER_WEEK_FVM = "Enter Your GmsPer Week"
-export const DATE_FVM = "Enter Your Date"
+export const SELECT_GROCERYS = "Select your grocerys"
+ export const ITEM_FVM = "Enter your item"
+export const PRICE_FVM = "Enter your price"
+export const GMSPER_WEEK_FVM = "Enter your gms per Week"
+export const DATE_FVM = "Enter your date"
+export const ITEM_ADDED_SUCCESSFULLY = "Item added successfully"
+export const  ITEM_ADDED_FAILED = "Item added failed please try again"
