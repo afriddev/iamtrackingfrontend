@@ -26,10 +26,11 @@ import {
   UPDATE,
 } from "../../utils/constants";
 import { daysInThisMonth, getTodayDate, useGetMe } from "../../utils/utils";
-import Chart from "../re/Chart";
+import Chart from "../reusable/Chart";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+
 
 function TodayStatistics() {
   const { userData, todaySpends } = useAppContext();
@@ -188,7 +189,7 @@ function TodayStatistics() {
                 )}
               </div>
             </div>
-            <div className=" relative mt-10  max-h-[33vh] rounded-md border border-black pb-2 pt-6">
+            <div className=" relative mt-10  max-h-[33vh] rounded-md border border-black pb-2 pt-6 ">
               <label className="absolute -top-[0.6rem] left-6 rounded-[0.1rem] bg-primary-foreground px-3 py-[0.1rem] text-[10px]  drop-shadow ">
                 {TRANSACTION_HISTORY}
               </label>
@@ -282,6 +283,7 @@ function TodayStatistics() {
                 </div>
               )}
             </div>
+            
           </div>
         </div>
       )}

@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import {
   createUserAPI,
+  getConfiguredGroceryDataAPI,
   getUserDataAPI,
   getUserGroceryDataAPI,
   loginUserAPI,
@@ -172,4 +173,25 @@ export function useGetUserGroceryData() {
     },
   });
   return { getUserGroceryData, isPending, data };
+}
+
+export function useConfiggrocerylist(){
+  const {mutate: submitGroceryData} = useMutation({
+    mutationFn: (data: any) =>
+      getConfiguredGroceryDataAPI({
+        emailId: "userEmail",
+        itemName: data.itemName,
+        pricePerKg: data.pricePerKg,
+        requiredGmsPerWeek: data.requiredGmsPerWeek,
+      }),
+      onSuccess: (response) =>{
+        if(response?.data.message === "SUCCESS"){
+          console.log("Grocery Item Added Successfully");
+        }
+      },
+      onError:(error) =>{
+        console.log("Error", error)
+      }
+  }) 
+  return {submitGroceryData}
 }

@@ -53,3 +53,7 @@ export function runJobAPI(emailId: string) {
 export function  getUserGroceryDataAPI(emailId: string) {
   return postAPI("getusergrocerydata", {emailId}) 
 }
+
+export function getConfiguredGroceryDataAPI(data:{emailId: string; itemName: string; pricePerKg: number; requiredGmsPerWeek: number}){
+  return postAPI("configgrocerylist", {data})
+}
