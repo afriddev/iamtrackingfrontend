@@ -17,18 +17,20 @@ interface FormValues{
 }
 
 function AppDialog({ onClose }: AppDialogProps) {
-  const { register, handleSubmit, formState } = useForm<FormValues>();
+  const { register, handleSubmit, formState, reset } = useForm<FormValues>();
   const { errors } = formState;
   const {submitGroceryData} = useConfiggrocerylist();
 
   function onSubmit(data: FormValues) {
     submitGroceryData(data);
+    console.log("Data", data)
+    reset();
   }
 
   return (
     <div className="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center z-50">
       <div className="w-[30vw] h-[65vh] bg-white p-4 rounded-md">
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center mb-4 text-2xl">
           <h1>{SELECT_GROCERYS}</h1>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="mt-10">
@@ -44,7 +46,7 @@ function AppDialog({ onClose }: AppDialogProps) {
           <AppInputErrors error={errors?.date?.message}>
             <Input {...register("date", { required: DATE_FVM })} type="text" placeholder="Enter Date" />
           </AppInputErrors>
-          <div className="flex justify-between mt-10">
+          <div className="grid grid-cols-2 gap-20 mt-10 ">
             <Button type="submit">Submit</Button>
             <Button onClick={onClose}>Close</Button>
           </div>

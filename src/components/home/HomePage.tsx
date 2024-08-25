@@ -11,6 +11,7 @@ import Spinner from "../../utils/Spinner";
 import TodayStatistics from "./TodayStatistics";
 import { getLocalStorageItem, useGetMe } from "@/utils/utils";
 import { CHARGES, GROCERY, SPENDS } from "@/utils/constants";
+import TodayGrocery from "./TodayGrocery";
 
 interface HomePageInterface {
   setPageNumber: (pageNumber: number) => void;
@@ -93,6 +94,7 @@ function HomePage({ setPageNumber }: HomePageInterface) {
               className={`${tabIndex === 1 && "absolute bottom-0 h-[0.15rem] w-full rounded-b-lg bg-primary "}`}
             ></div>
           </div>
+        
           <div
             onClick={() => {
               handleTabIndex(2);
@@ -107,6 +109,9 @@ function HomePage({ setPageNumber }: HomePageInterface) {
         </div>
 
         {userData?.monthLimitAmount >= 500 && tabIndex === 0 && <TodayStatistics />}
+        <div className="mt-10">
+        {userData?.monthLimitAmount >=500 && tabIndex === 1 && <TodayGrocery />}
+        </div>
       </div>
     </div>
   );
