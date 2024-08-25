@@ -55,5 +55,5 @@ export function  getUserGroceryDataAPI(emailId: string) {
 }
 
 export function getConfiguredGroceryDataAPI(data:{emailId: string; itemName: string; pricePerKg: number; requiredGmsPerWeek: number}){
-  return postAPI("configgrocerylist", {data})
+  return postAPI("configgrocerylist", data)
 }

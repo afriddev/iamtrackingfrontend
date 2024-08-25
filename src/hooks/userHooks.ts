@@ -176,22 +176,18 @@ export function useGetUserGroceryData() {
 }
 
 export function useConfiggrocerylist(){
-  const {mutate: submitGroceryData} = useMutation({
+  const {emailId} = useGetMe()
+  const {mutate: submitGroceryData, isPending} = useMutation({
     mutationFn: (data: any) =>
       getConfiguredGroceryDataAPI({
-        emailId: "userEmail",
+        emailId: emailId as never,
         itemName: data.itemName,
         pricePerKg: data.pricePerKg,
         requiredGmsPerWeek: data.requiredGmsPerWeek,
       }),
-      onSuccess: (response) =>{
-        if(response?.data.message === "SUCCESS"){
-          console.log("Grocery Item Added Successfully");
-        }
-      },
       onError:(error) =>{
         console.log("Error", error)
       }
   }) 
-  return {submitGroceryData}
+  return {submitGroceryData, isPending}
 }
