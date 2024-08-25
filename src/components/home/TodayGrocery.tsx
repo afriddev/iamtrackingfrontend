@@ -9,12 +9,15 @@ import Spinner from "@/utils/Spinner";
 import { useToast } from "@/components/ui/use-toast";
 import {
   ITEM_FVM,
-  DATE_FVM,
   GMSPER_WEEK_FVM,
   ITEM_ADDED_SUCCESSFULLY,
   PRICE_FVM,
   SELECT_GROCERYS,
   ITEM_ADDED_FAILED,
+  ADD_ITEM,
+  SUBMIT,
+  CLOSE,
+  ADD_GROCERY_ITEM,
 } from "@/utils/constants";
 import { FormValues } from "@/types/groceryDataTypes";
 
@@ -41,8 +44,7 @@ function TodayGrocery() {
             variant: "constructive",
           });
           setShowDialog(false);
-        }
-        else{
+        } else {
           toast({
             title: "ERROR",
             description: ITEM_ADDED_FAILED,
@@ -56,51 +58,46 @@ function TodayGrocery() {
   return (
     <div>
       <Spinner loadingState={isPending} />
-      <Button onClick={handleClick}>Add Today Grocery's</Button>
+      <Button onClick={handleClick}>{ADD_ITEM}</Button>
       {showDialog && (
-        <AppDialog>
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-700 bg-opacity-50">
-            <div className="h-[65vh] w-[90vw] rounded-md bg-white p-4 lg:w-[30vw]">
-              <div className="mb-4 flex items-center justify-between text-2xl">
-                <h1>{SELECT_GROCERYS}</h1>
-              </div>
-              <form onSubmit={handleSubmit(onSubmit)} className="mt-10">
+        <AppDialog title={ADD_GROCERY_ITEM}>
+          <div>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col gap-2"
+            >
+              <div>
                 <AppInputErrors error={errors?.itemName?.message}>
                   <Input
                     {...register("itemName", { required: ITEM_FVM })}
                     type="text"
-                    placeholder="Enter Item Name"
+                    placeholder={ITEM_FVM}
                   />
                 </AppInputErrors>
+              </div>
+              <div>
                 <AppInputErrors error={errors?.pricePerKg?.message}>
                   <Input
                     {...register("pricePerKg", { required: PRICE_FVM })}
-                    type="number"
-                    placeholder="Enter your Price"
+                    placeholder={PRICE_FVM}
                   />
                 </AppInputErrors>
+              </div>
+              <div>
                 <AppInputErrors error={errors?.requiredGmsPerWeek?.message}>
                   <Input
                     {...register("requiredGmsPerWeek", {
                       required: GMSPER_WEEK_FVM,
                     })}
-                    type="number"
-                    placeholder="Enter Gms Per Week"
+                    placeholder={GMSPER_WEEK_FVM}
                   />
                 </AppInputErrors>
-                <AppInputErrors error={errors?.date?.message}>
-                  <Input
-                    {...register("date", { required: DATE_FVM })}
-                    type="text"
-                    placeholder="Enter Date"
-                  />
-                </AppInputErrors>
-                <div className="mt-10 grid grid-cols-2 gap-20 ">
-                  <Button type="submit">Submit</Button>
-                  <Button onClick={() => setShowDialog(false)}>Close</Button>
-                </div>
-              </form>
-            </div>
+              </div>
+              <div className=" mt-6 grid grid-cols-2 gap-4 ">
+                <Button type="submit">{SUBMIT}</Button>
+                <Button onClick={() => setShowDialog(false)}>{CLOSE}</Button>
+              </div>
+            </form>
           </div>
         </AppDialog>
       )}

@@ -7,9 +7,9 @@ interface AppInputErrorsInterface{
 }
 function AppInputErrors({children, error}:AppInputErrorsInterface) {
   return (
-    <div className="h-[10vh]">
+    <div className="h-14 relative">
         {children}
-        <label className='text-destructive text-sm h-7'>{error}</label>
+        <label className='text-destructive text-[8px] absolute pt-[0.35rem] left-2'>{error}</label>
     </div>
   )
 }
