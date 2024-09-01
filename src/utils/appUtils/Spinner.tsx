@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useSetLoading } from "../hooks/appHooks"
+import { useSetLoading } from "../../hooks/appHooks"
 
 interface Spinnerinterface{
     loadingState:boolean

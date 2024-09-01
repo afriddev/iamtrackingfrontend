@@ -58,10 +58,8 @@ export const ENTER_MONTHLY_GROCERY_AMOUNT = "Please enter your monthly grocery a
 export const ENTER_MONTHLY_EXTRA_SPENDS = "Please enter your monthly extra spends"
 export const AMOUNT_SET_SUCCESS = 'Monthly amount configured'
 export const CHARGES = "Charges"
-
-//Form constances 
 export const SELECT_GROCERYS = "Select your grocerys"
- export const ITEM_FVM = "Enter your item"
+export const ITEM_FVM = "Enter your item"
 export const PRICE_FVM = "Enter item price"
 export const GMSPER_WEEK_FVM = "Enter gms per Week"
 export const DATE_FVM = "Enter your date"
@@ -71,3 +69,7 @@ export const ADD_ITEM = "Add item"
 export const SUBMIT = "Submit"
 export const CLOSE = "Close"
 export const ADD_GROCERY_ITEM = "Add grocery item"
+export const ADD = "Add"
+export const ITEM_NAME = "Item name"
+export const PRICE = "Price"
+export const GMS = "Gms"

@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useContext, useReducer } from "react";
 import { userType } from "@/types/userTypes";
+import { groceryDataType } from "@/types/groceryDataTypes";
 
 export type dispatchDataType = {
   type: string;
@@ -14,7 +15,11 @@ type contextType = {
   userData: userType;
   totalSpendAmount: number;
   balance: number;
-  todaySpends:number
+  todaySpends: number;
+  totalGroceryData: groceryDataType[];
+  dailyGroceryData: groceryDataType[];
+  missedGroceryData: groceryDataType[];
+  completedroceryData: groceryDataType[];
 };
 const initState: contextType = {
   dispatch: () => {},
@@ -24,7 +29,11 @@ const initState: contextType = {
   userData: undefined as any,
   totalSpendAmount: 0,
   balance: 0,
-  todaySpends:0
+  todaySpends: 0,
+  totalGroceryData: [],
+  dailyGroceryData: [],
+  missedGroceryData: [],
+  completedroceryData: [],
 };
 
 const contextProvider = createContext(initState);
@@ -50,8 +59,8 @@ function reducer(state: contextType, action: dispatchDataType) {
       return {
         ...state,
         totalSpendAmount: action?.payload?.totalSpendAmount,
-        balance:action?.payload?.balance,
-        todaySpends:action?.payload?.todaySpends
+        balance: action?.payload?.balance,
+        todaySpends: action?.payload?.todaySpends,
       };
     case "setLoggedIn":
       return {
@@ -61,10 +70,10 @@ function reducer(state: contextType, action: dispatchDataType) {
     case "setGroceryData":
       return {
         ...state,
-        userData: {
-          ...state?.userData,
-          groceryData: action?.payload,
-        },
+        totalGroceryData: action?.payload?.total,
+        dailyGroceryData: action?.payload?.daily,
+        missedGroceryData: action?.payload?.missed,
+        completedroceryData: action?.payload?.completed,
       };
 
     default:
@@ -74,7 +83,19 @@ function reducer(state: contextType, action: dispatchDataType) {
 
 export default function AppContext({ children }: { children: ReactNode }) {
   const [
-    { userData, pageIndex, totalSpendAmount, balance, isLoading, loggedIn,todaySpends },
+    {
+      userData,
+      pageIndex,
+      totalSpendAmount,
+      totalGroceryData,
+      dailyGroceryData,
+      missedGroceryData,
+      completedroceryData,
+      balance,
+      isLoading,
+      loggedIn,
+      todaySpends,
+    },
     dispatch,
   ] = useReducer(reducer, initState);
 
@@ -88,7 +109,11 @@ export default function AppContext({ children }: { children: ReactNode }) {
         balance,
         isLoading,
         loggedIn,
-        todaySpends
+        todaySpends,
+        totalGroceryData,
+        dailyGroceryData,
+        missedGroceryData,
+        completedroceryData,
       }}
     >
       {children}

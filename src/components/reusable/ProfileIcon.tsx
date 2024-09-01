@@ -2,7 +2,7 @@
 import { BiUser } from "react-icons/bi";
 import { useProfileImageUplaod } from "../../hooks/appHooks";
 import { useAppContext } from "../../utils/AppContext";
-import Spinner from "../../utils/Spinner";
+import Spinner from "../../utils/appUtils/Spinner";
 
 interface ProfileIconInerface { }
 

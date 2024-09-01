@@ -19,7 +19,7 @@ import {
   useGetUserGroceryData,
   useSetMonthlyAmount,
 } from "@/hooks/userHooks";
-import Spinner from "@/utils/Spinner";
+import Spinner from "@/utils/appUtils/Spinner";
 import { useGetMe } from "@/utils/utils";
 import { useForm } from "react-hook-form";
 import { GrCaretNext } from "react-icons/gr";

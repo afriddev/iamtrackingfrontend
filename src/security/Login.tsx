@@ -21,7 +21,7 @@ import {
   USER_NAME_ERROR,
   WELCOME,
 } from "@/utils/constants";
-import Spinner from "@/utils/Spinner";
+import Spinner from "@/utils/appUtils/Spinner";
 import { getErrorDescription, setLocalStorageItem } from "@/utils/utils";
 import { useState } from "react";
 import { IoEyeOffOutline } from "react-icons/io5";

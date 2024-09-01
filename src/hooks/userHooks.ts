@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import {
   createUserAPI,
-  getConfiguredGroceryDataAPI,
+  configureGroceryDataAPI,
   getUserDataAPI,
   getUserGroceryDataAPI,
   loginUserAPI,
@@ -9,6 +9,7 @@ import {
   sendOtpAPI,
   setMonthlyAmountAPI,
   updateDailySpendAmountAPI,
+  getConfiguredGroceryDataAPI,
 } from "../apiservices/api";
 import { useAppContext } from "../utils/AppContext";
 import { useGetMe } from "@/utils/utils";
@@ -175,19 +176,40 @@ export function useGetUserGroceryData() {
   return { getUserGroceryData, isPending, data };
 }
 
-export function useConfiggrocerylist(){
-  const {emailId} = useGetMe()
-  const {mutate: submitGroceryData, isPending} = useMutation({
+export function useConfigGroceryData() {
+  const { emailId } = useGetMe();
+  const { mutate: configureGroceryData, isPending } = useMutation({
     mutationFn: (data: any) =>
-      getConfiguredGroceryDataAPI({
+      configureGroceryDataAPI({
         emailId: emailId as never,
         itemName: data.itemName,
         pricePerKg: data.pricePerKg,
         requiredGmsPerWeek: data.requiredGmsPerWeek,
       }),
-      onError:(error) =>{
-        console.log("Error", error)
+  });
+  return { configureGroceryData, isPending };
+}
+
+export function useGetConfigureGroceryData() {
+  const { emailId } = useGetMe();
+  const { dispatch } = useAppContext();
+  const {
+    mutate: getConfigureGroceryData,
+    isPending,
+    data: groceryData,
+  } = useMutation({
+    mutationFn: () =>
+      getConfiguredGroceryDataAPI({
+        emailId: emailId as never,
+      }),
+    onSuccess(data) {
+      if (data?.data) {
+        dispatch({
+          type: "setGroceryData",
+          payload: data?.data,
+        });
       }
-  }) 
-  return {submitGroceryData, isPending}
+    },
+  });
+  return { getConfigureGroceryData, isPending, groceryData };
 }

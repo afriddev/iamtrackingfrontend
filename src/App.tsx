@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import HomePage from "./components/home/HomePage";
 import { useAppContext } from "./utils/AppContext";
-import Loading from "./utils/Loading";
+import Loading from "./utils/appUtils/Loading";
 import { useGetAndSetUserData } from "./hooks/userHooks";
 import LoginMain from "./security/LoginMain";
 import { Toaster } from "@/components/ui/toaster";

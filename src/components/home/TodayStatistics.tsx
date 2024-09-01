@@ -2,7 +2,7 @@ import {
   useGetAndSetUserData,
   useUpdateDailySpendAMount,
 } from "@/hooks/userHooks";
-import Spinner from "@/utils/Spinner";
+import Spinner from "@/utils/appUtils/Spinner";
 import { useState } from "react";
 import { CiFaceFrown, CiSaveUp1 } from "react-icons/ci";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";

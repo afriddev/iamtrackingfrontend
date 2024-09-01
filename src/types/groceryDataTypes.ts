@@ -1,6 +1,7 @@
-
-export type FormValues={
-    itemName: string;
-    pricePerKg: number;
-    requiredGmsPerWeek: number;
-  }
+export type groceryDataType = {
+  itemName: string;
+  pricePerKg: number;
+  requiredGmsPerWeek: number;
+  addedDate: number;
+  id: string;
+};

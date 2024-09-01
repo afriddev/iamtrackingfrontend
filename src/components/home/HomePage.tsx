@@ -7,7 +7,7 @@ import {
   useGetUserGroceryData,
   useRunJob,
 } from "../../hooks/userHooks";
-import Spinner from "../../utils/Spinner";
+import Spinner from "../../utils/appUtils/Spinner";
 import TodayStatistics from "./TodayStatistics";
 import { getLocalStorageItem, useGetMe } from "@/utils/utils";
 import { CHARGES, GROCERY, SPENDS } from "@/utils/constants";
@@ -24,7 +24,7 @@ function HomePage({ setPageNumber }: HomePageInterface) {
   const { runJob, isPending: runningJob } = useRunJob();
   const { getUserGroceryData, isPending: settingUserGroceryData } =
     useGetUserGroceryData();
-  const [tabIndex, setTabIndex] = useState(0);
+  const [tabIndex, setTabIndex] = useState(1);
 
   useEffect(() => {
     if (emailId || getLocalStorageItem("emailId") || loggedIn) {
@@ -95,17 +95,6 @@ function HomePage({ setPageNumber }: HomePageInterface) {
             ></div>
           </div>
 
-          <div
-            onClick={() => {
-              handleTabIndex(2);
-            }}
-            className={`glass-shadow ${tabIndex === 2 && "bg-white"} flex w-full cursor-pointer items-center justify-center rounded py-2 text-center  drop-shadow-lg`}
-          >
-            {CHARGES}
-            <div
-              className={`${tabIndex === 2 && "absolute bottom-0 h-[0.15rem] w-full rounded-b-lg bg-primary "}`}
-            ></div>
-          </div>
         </div>
 
         {userData?.monthLimitAmount >= 500 && tabIndex === 0 && (

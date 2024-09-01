@@ -23,7 +23,7 @@ import {
   PASSWORD_ERROR,
   SIGN_UP,
 } from "@/utils/constants";
-import Spinner from "@/utils/Spinner";
+import Spinner from "@/utils/appUtils/Spinner";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoEyeOffOutline } from "react-icons/io5";

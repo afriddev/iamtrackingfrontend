@@ -42,18 +42,26 @@ export function createUserAPI(data: createUserType) {
   return postAPI("createuser", data);
 }
 
-export function loginUserAPI(data: {emailId:string,password:string}) {
+export function loginUserAPI(data: { emailId: string; password: string }) {
   return postAPI("login", data);
 }
 
 export function runJobAPI(emailId: string) {
-  return postAPI("runjob", {emailId}) 
+  return postAPI("runjob", { emailId });
 }
 
-export function  getUserGroceryDataAPI(emailId: string) {
-  return postAPI("getusergrocerydata", {emailId}) 
+export function getUserGroceryDataAPI(emailId: string) {
+  return postAPI("getusergrocerydata", { emailId });
 }
 
-export function getConfiguredGroceryDataAPI(data:{emailId: string; itemName: string; pricePerKg: number; requiredGmsPerWeek: number}){
-  return postAPI("configgrocerylist", data)
+export function configureGroceryDataAPI(data: {
+  emailId: string;
+  itemName: string;
+  pricePerKg: number;
+  requiredGmsPerWeek: number;
+}) {
+  return postAPI("configgrocerylist", data);
+}
+export function getConfiguredGroceryDataAPI(data: { emailId: string }) {
+  return postAPI("getconfiguredgrocerydata", data);
 }
