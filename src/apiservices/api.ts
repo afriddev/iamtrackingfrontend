@@ -59,6 +59,7 @@ export function configureGroceryDataAPI(data: {
   itemName: string;
   pricePerKg: number;
   requiredGmsPerWeek: number;
+  id?:string | undefined
 }) {
   return postAPI("configgrocerylist", data);
 }
@@ -68,4 +69,8 @@ export function getConfiguredGroceryDataAPI(data: { emailId: string }) {
 export function setCompleteGroceryDataAPI(data: { emailId: string,id:string }) {
   return postAPI("completegrocerydata", data);
 }
+export function deleteGroceryDataAPI(data: { emailId: string,id:string }) {
+  return postAPI("deletegrocerydata", data);
+}
+
 

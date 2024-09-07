@@ -10,7 +10,8 @@ import {
   setMonthlyAmountAPI,
   updateDailySpendAmountAPI,
   getConfiguredGroceryDataAPI,
-  setCompleteGroceryDataAPI
+  setCompleteGroceryDataAPI,
+  deleteGroceryDataAPI
 } from "../apiservices/api";
 import { useAppContext } from "../utils/AppContext";
 import { useGetMe } from "@/utils/utils";
@@ -186,6 +187,7 @@ export function useConfigGroceryData() {
         itemName: data.itemName,
         pricePerKg: data.pricePerKg,
         requiredGmsPerWeek: data.requiredGmsPerWeek,
+        id:data?.id
       }),
   });
   return { configureGroceryData, isPending };
@@ -236,5 +238,30 @@ export function useCompleteGrceryData() {
     },
   });
   return { setCompleteGroceryData, isPending, data };
+}
+
+
+export function useDeleteGrceryData() {
+  const { emailId } = useGetMe();
+  const { dispatch } = useAppContext();
+  const {
+    mutate: deleteGroceryData,
+    isPending,
+    data
+  } = useMutation({
+    mutationFn: ({id}:{id:string}) =>deleteGroceryDataAPI({
+        emailId: emailId as never,
+        id
+      }),
+    onSuccess(data) {
+      if (data?.data) {
+        dispatch({
+          type: "setGroceryData",
+          payload: data?.data,
+        });
+      }
+    },
+  });
+  return { deleteGroceryData, isPending, data };
 }
 

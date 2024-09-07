@@ -6,7 +6,8 @@ import { useForm } from "react-hook-form";
 import {
   useConfigGroceryData,
   useGetConfigureGroceryData,
-  useCompleteGrceryData
+  useCompleteGrceryData,
+  useDeleteGrceryData,
 } from "@/hooks/userHooks";
 import Spinner from "@/utils/appUtils/Spinner";
 import { useToast } from "@/components/ui/use-toast";
@@ -21,6 +22,10 @@ import {
   ADD_GROCERY_ITEM,
   ADD,
   REQUEST_SUCCESS,
+  EDIT_GGROCERY_ITEM,
+  DELETED_ITEM_SUCCESS,
+  REQUEST_FAILED,
+  EDIT,
 } from "@/utils/constants";
 import { groceryDataType } from "@/types/groceryDataTypes";
 import { X } from "lucide-react";
@@ -32,7 +37,7 @@ import { getGroceryColumnData } from "./groceryUtils";
 
 function Grocery() {
   const [showDialog, setShowDialog] = useState(false);
-  const { register, handleSubmit, formState, reset } =
+  const { register, handleSubmit, formState, reset, setValue } =
     useForm<groceryDataType>();
   const { errors } = formState;
   const { configureGroceryData, isPending } = useConfigGroceryData();
@@ -59,12 +64,19 @@ function Grocery() {
     { name: "Completed", index: 3 },
   ];
 
-  const { columnIndex, keys, headers, getColumn } =
-    getGroceryColumnData(selectedGroceryIndex,handleCompleteClick);
+  const { columnIndex, keys, headers, getColumn } = getGroceryColumnData(
+    selectedGroceryIndex,
+    handleCompleteClick,
+    handleEditClick,
+    handleDeleteClick,
+  );
 
-  const {isPending:completeData,setCompleteGroceryData} = useCompleteGrceryData()
+  const { isPending: completeData, setCompleteGroceryData } =
+    useCompleteGrceryData();
+  const [dialogTitle, setDialogTitle] = useState<string>(ADD_GROCERY_ITEM);
 
-
+  const { deleteGroceryData, isPending: deletinggroceryData } =
+    useDeleteGrceryData();
 
   useEffect(() => {
     if (totalGroceryData?.length === 0 && !groceryAPIData?.data) {
@@ -104,6 +116,7 @@ function Grocery() {
 
   function closeDialog() {
     setShowDialog(false);
+    setDialogTitle(ADD_GROCERY_ITEM);
   }
 
   function handleSetSelectedGroceryData(index: number) {
@@ -138,32 +151,79 @@ function Grocery() {
     setOpened(!opened);
   }
 
-  function handleCompleteClick(id:string){
-    setCompleteGroceryData({
-      id
-    },{
-      onSuccess(data) {
-        if(data?.data?.message === "SUCCESS"){
-          toast({
-            title: "SUCCESS",
-            description: REQUEST_SUCCESS,
-            variant: "constructive",
-          });
-          getConfigureGroceryData();
-          handleSetSelectedGroceryData(0)
-
-        }
-        
+  function handleCompleteClick(id: string) {
+    setCompleteGroceryData(
+      {
+        id,
       },
-    })
-    
+      {
+        onSuccess(data) {
+          if (data?.data?.message === "SUCCESS") {
+            toast({
+              title: "SUCCESS",
+              description: REQUEST_SUCCESS,
+              variant: "constructive",
+            });
+            getConfigureGroceryData();
+            handleSetSelectedGroceryData(0);
+          }
+        },
+      },
+    );
   }
+
+  function handleEditClick(data: groceryDataType) {
+    setValue("itemName", data?.itemName);
+    setValue("pricePerKg", data?.pricePerKg);
+    setValue("requiredGmsPerWeek", data?.requiredGmsPerWeek);
+    setValue("id", data?.id);
+
+    setDialogTitle(EDIT_GGROCERY_ITEM);
+    setShowDialog(true);
+  }
+
+  function handleDeleteClick(id: string) {
+    deleteGroceryData(
+      {
+        id,
+      },
+      {
+        onSuccess(data: any) {
+          if (data?.data?.message === "SUCCESS") {
+            toast({
+              title: "SUCCESS",
+              description: DELETED_ITEM_SUCCESS,
+              variant: "constructive",
+            });
+            getConfigureGroceryData();
+          } else {
+            toast({
+              title: "ERROR",
+              description: REQUEST_FAILED,
+              variant: "destructive",
+            });
+          }
+        },
+      },
+    );
+  }
+
+  if (gettingConfigureData)
+    return <Spinner loadingState={gettingConfigureData} />;
 
   return (
     <div>
-      <Spinner loadingState={isPending || gettingConfigureData || completeData} />
+      <Spinner
+        loadingState={isPending || completeData || deletinggroceryData}
+      />
       <div className="flex w-full items-center justify-between px-2">
-        <div className="relative text-xs">
+        <div
+          tabIndex={1}
+          onBlur={() => {
+            setOpened(false);
+          }}
+          className="relative text-xs"
+        >
           <div
             onClick={handleOpen}
             className={`-mt-[0.2rem] flex w-[25vw] cursor-pointer items-center justify-between  bg-white  px-2 py-[0.2rem] shadow-lg ${opened ? "rounded-t-md" : "rounded-md"}`}
@@ -209,7 +269,9 @@ function Grocery() {
         <Table
           columnIndex={columnIndex}
           cellWidth="w-[20vw]"
-          column={(data:any)=>{return getColumn(data)}}
+          column={(data: any) => {
+            return getColumn(data);
+          }}
           data={selectedGroceryData}
           headers={headers}
           keys={keys}
@@ -217,7 +279,7 @@ function Grocery() {
       </div>
 
       {showDialog && (
-        <AppDialog closeMe={closeDialog} title={ADD_GROCERY_ITEM}>
+        <AppDialog closeMe={closeDialog} title={dialogTitle}>
           <div>
             <form
               onSubmit={handleSubmit(onSubmit)}
@@ -263,7 +325,9 @@ function Grocery() {
                   <X className="-mt-1 h-5 w-5 pr-1" />
                   {CLOSE}
                 </Button>
-                <Button type="submit">{ADD}</Button>
+                <Button type="submit">
+                  {dialogTitle === ADD_GROCERY_ITEM ? ADD : EDIT}
+                </Button>
               </div>
             </form>
           </div>
