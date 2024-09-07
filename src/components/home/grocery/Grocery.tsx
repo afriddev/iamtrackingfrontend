@@ -251,7 +251,7 @@ function Grocery() {
                       onClick={() => {
                         handleSetSelectedGroceryData(item?.index);
                       }}
-                      className={`flex w-full cursor-pointer justify-center bg-zinc-200 py-1 ${index === groceryFilters?.length - 1 && "rounded-b-md"}`}
+                      className={`flex w-full cursor-pointer justify-center bg-zinc-100 py-1 ${index === groceryFilters?.length - 1 && "rounded-b-md"}`}
                       key={index}
                     >
                       {item?.name}
