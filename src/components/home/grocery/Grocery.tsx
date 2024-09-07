@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import AppDialog from "@/utils/appUtils/AppDialog";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import {
   useConfigGroceryData,
   useGetConfigureGroceryData,
+  useCompleteGrceryData
 } from "@/hooks/userHooks";
 import Spinner from "@/utils/appUtils/Spinner";
 import { useToast } from "@/components/ui/use-toast";
@@ -19,11 +20,6 @@ import {
   CLOSE,
   ADD_GROCERY_ITEM,
   ADD,
-  S_NO,
-  ITEM_NAME,
-  GMS,
-  PRICE,
-  DATE,
 } from "@/utils/constants";
 import { groceryDataType } from "@/types/groceryDataTypes";
 import { X } from "lucide-react";
@@ -31,14 +27,10 @@ import { useAppContext } from "@/utils/AppContext";
 import Table from "@/utils/appUtils/Table";
 import { IoMdArrowDropup } from "react-icons/io";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { getGroceryColumnData } from "./groceryUtils";
 
-function TodayGrocery() {
+function Grocery() {
   const [showDialog, setShowDialog] = useState(false);
-
-  function handleClick() {
-    setShowDialog(true);
-  }
-
   const { register, handleSubmit, formState, reset } =
     useForm<groceryDataType>();
   const { errors } = formState;
@@ -65,6 +57,8 @@ function TodayGrocery() {
     { name: "Missed", index: 2 },
     { name: "Completed", index: 3 },
   ];
+  const { columnIndex, keys, headers, column } =
+    getGroceryColumnData(selectedGroceryIndex,handleCompleteClick);
 
   useEffect(() => {
     if (totalGroceryData?.length === 0 && !groceryAPIData?.data) {
@@ -74,6 +68,10 @@ function TodayGrocery() {
       setSelectedGrocerData(totalGroceryData);
     }
   }, [totalGroceryData]);
+
+  function handleClick() {
+    setShowDialog(true);
+  }
 
   function onSubmit(data: groceryDataType) {
     configureGroceryData(data, {
@@ -134,6 +132,10 @@ function TodayGrocery() {
     setOpened(!opened);
   }
 
+  function handleCompleteClick(){
+    
+  }
+
   return (
     <div>
       <Spinner loadingState={isPending || gettingConfigureData} />
@@ -141,7 +143,7 @@ function TodayGrocery() {
         <div className="relative text-xs">
           <div
             onClick={handleOpen}
-            className={`-mt-[0.2rem] flex w-[20vw] cursor-pointer items-center justify-between  bg-white  px-2 py-[0.2rem] shadow-lg ${opened ? "rounded-t-md" : "rounded-md"}`}
+            className={`-mt-[0.2rem] flex w-[25vw] cursor-pointer items-center justify-between  bg-white  px-2 py-[0.2rem] shadow-lg ${opened ? "rounded-t-md" : "rounded-md"}`}
           >
             {selectedGroceryIndex === 0
               ? "Total"
@@ -158,7 +160,7 @@ function TodayGrocery() {
             )}
           </div>
           {opened && (
-            <div className="absolute flex w-[20vw] flex-col  items-center rounded-lg shadow-md">
+            <div className="absolute flex w-[25vw] flex-col  items-center rounded-lg shadow-md">
               {groceryFilters?.map((item, index) => {
                 return (
                   item?.index !== selectedGroceryIndex && (
@@ -182,15 +184,12 @@ function TodayGrocery() {
       </div>
       <div className="mt-1 px-2">
         <Table
+          columnIndex={columnIndex}
+          cellWidth="w-[20vw]"
+          column={column}
           data={selectedGroceryData}
-          headers={[S_NO, DATE, ITEM_NAME, GMS, PRICE]}
-          keys={[
-            "",
-            "addedDate",
-            "itemName",
-            "requiredGmsPerWeek",
-            "pricePerKg",
-          ]}
+          headers={headers}
+          keys={keys}
         />
       </div>
 
@@ -251,4 +250,4 @@ function TodayGrocery() {
   );
 }
 
-export default TodayGrocery;
+export default Grocery;

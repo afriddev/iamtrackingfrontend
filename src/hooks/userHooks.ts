@@ -10,6 +10,7 @@ import {
   setMonthlyAmountAPI,
   updateDailySpendAmountAPI,
   getConfiguredGroceryDataAPI,
+  setCompleteGroceryDataAPI
 } from "../apiservices/api";
 import { useAppContext } from "../utils/AppContext";
 import { useGetMe } from "@/utils/utils";
@@ -213,3 +214,27 @@ export function useGetConfigureGroceryData() {
   });
   return { getConfigureGroceryData, isPending, groceryData };
 }
+export function useCompleteGrceryData() {
+  const { emailId } = useGetMe();
+  const { dispatch } = useAppContext();
+  const {
+    mutate: getConfigureGroceryData,
+    isPending,
+    data: groceryData,
+  } = useMutation({
+    mutationFn: ({id}:{id:string}) =>setCompleteGroceryDataAPI({
+        emailId: emailId as never,
+        id
+      }),
+    onSuccess(data) {
+      if (data?.data) {
+        dispatch({
+          type: "setGroceryData",
+          payload: data?.data,
+        });
+      }
+    },
+  });
+  return { getConfigureGroceryData, isPending, groceryData };
+}
+

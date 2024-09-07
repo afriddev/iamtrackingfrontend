@@ -1,15 +1,24 @@
 import { CiFaceFrown } from "react-icons/ci";
 import { NO_DATA_FOUND } from "../constants";
+import { ReactNode } from "react";
 
 interface TableInterface {
   data: any;
   headers: string[];
   keys: string[];
+  cellWidth?: string;
+  columnIndex?: number | undefined;
+  column?: ReactNode;
 }
 
-function Table({ data, headers, keys }: TableInterface) {
-  const cellWidth = `w-${100 / headers?.length}vw`;
-
+function Table({
+  data,
+  headers,
+  keys,
+  columnIndex,
+  column,
+  cellWidth,
+}: TableInterface) {
   return (
     <div className="">
       <div className="max-h-[70vh] w-full overflow-auto rounded-lg border border-black  ">
@@ -18,7 +27,10 @@ function Table({ data, headers, keys }: TableInterface) {
             <div className="flex items-center justify-between px-2 py-2 text-xs">
               {headers?.map((header: string, index: number) => {
                 return (
-                  <div className={`flex ${cellWidth} `} key={index}>
+                  <div
+                    className={`flex  ${index === 0 ? `w-[10vw] ` : `justify-center ${cellWidth}`}`}
+                    key={index}
+                  >
                     <label className="border-b border-black">{header}</label>
                   </div>
                 );
@@ -32,13 +44,16 @@ function Table({ data, headers, keys }: TableInterface) {
                 >
                   {keys?.map((key: string, index1: number) => {
                     return index1 === 0 ? (
-                      <div className={`flex  ${cellWidth}`} key={index1}>
-                        <label className="rounded-md bg-black px-2 py-1  text-white">
+                      <div className={`flex w-[10vw]`} key={index1}>
+                        <label className="rounded-md bg-black  px-2 py-1  text-white">
                           {index + 1}
                         </label>
                       </div>
+                    ) : (columnIndex === 0 || columnIndex) &&
+                      index1 === columnIndex ? (
+                      column
                     ) : (
-                      <div className={`flex ${cellWidth} pl-2`}>
+                      <div className={` flex ${cellWidth}   justify-center `}>
                         <label>{item[key] ?? "-"}</label>
                       </div>
                     );

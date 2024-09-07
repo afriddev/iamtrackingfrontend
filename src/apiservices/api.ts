@@ -65,3 +65,7 @@ export function configureGroceryDataAPI(data: {
 export function getConfiguredGroceryDataAPI(data: { emailId: string }) {
   return postAPI("getconfiguredgrocerydata", data);
 }
+export function setCompleteGroceryDataAPI(data: { emailId: string,id:string }) {
+  return postAPI("getconfiguredgrocerydata", data);
+}
+

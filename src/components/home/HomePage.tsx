@@ -11,7 +11,7 @@ import Spinner from "../../utils/appUtils/Spinner";
 import TodayStatistics from "./TodayStatistics";
 import { getLocalStorageItem, useGetMe } from "@/utils/utils";
 import { CHARGES, GROCERY, SPENDS } from "@/utils/constants";
-import TodayGrocery from "./TodayGrocery";
+import Grocery from "./grocery/Grocery";
 
 interface HomePageInterface {
   setPageNumber: (pageNumber: number) => void;
@@ -102,7 +102,7 @@ function HomePage({ setPageNumber }: HomePageInterface) {
         )}
         <div className="mt-10">
           {userData?.monthLimitAmount >= 500 && tabIndex === 1 && (
-            <TodayGrocery />
+            <Grocery />
           )}
         </div>
       </div>

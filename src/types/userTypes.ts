@@ -41,7 +41,7 @@ export type groceryType = {
   notifications: [groceryListDataType];
 
   missedGroceryList: [groceryListDataType];
-  todayGroceryList: [groceryListDataType];
+  GroceryList: [groceryListDataType];
 };
 
 export type groceryListDataType = {
