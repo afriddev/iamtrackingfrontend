@@ -20,6 +20,7 @@ import {
   CLOSE,
   ADD_GROCERY_ITEM,
   ADD,
+  REQUEST_SUCCESS,
 } from "@/utils/constants";
 import { groceryDataType } from "@/types/groceryDataTypes";
 import { X } from "lucide-react";
@@ -57,8 +58,13 @@ function Grocery() {
     { name: "Missed", index: 2 },
     { name: "Completed", index: 3 },
   ];
-  const { columnIndex, keys, headers, column } =
+
+  const { columnIndex, keys, headers, getColumn } =
     getGroceryColumnData(selectedGroceryIndex,handleCompleteClick);
+
+  const {isPending:completeData,setCompleteGroceryData} = useCompleteGrceryData()
+
+
 
   useEffect(() => {
     if (totalGroceryData?.length === 0 && !groceryAPIData?.data) {
@@ -132,13 +138,30 @@ function Grocery() {
     setOpened(!opened);
   }
 
-  function handleCompleteClick(){
+  function handleCompleteClick(id:string){
+    setCompleteGroceryData({
+      id
+    },{
+      onSuccess(data) {
+        if(data?.data?.message === "SUCCESS"){
+          toast({
+            title: "SUCCESS",
+            description: REQUEST_SUCCESS,
+            variant: "constructive",
+          });
+          getConfigureGroceryData();
+          handleSetSelectedGroceryData(0)
+
+        }
+        
+      },
+    })
     
   }
 
   return (
     <div>
-      <Spinner loadingState={isPending || gettingConfigureData} />
+      <Spinner loadingState={isPending || gettingConfigureData || completeData} />
       <div className="flex w-full items-center justify-between px-2">
         <div className="relative text-xs">
           <div
@@ -186,7 +209,7 @@ function Grocery() {
         <Table
           columnIndex={columnIndex}
           cellWidth="w-[20vw]"
-          column={column}
+          column={(data:any)=>{return getColumn(data)}}
           data={selectedGroceryData}
           headers={headers}
           keys={keys}

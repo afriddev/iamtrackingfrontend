@@ -1,8 +1,8 @@
 import { createUserType } from "@/types/userTypes";
 import axios from "axios";
 
-const BASE_URL = "https://dailytrackingapi.vercel.app/api/";
-// const BASE_URL = "http://localhost:3000/api/";
+// const BASE_URL = "https://dailytrackingapi.vercel.app/api/";
+const BASE_URL = "http://localhost:3000/api/";
 
 function postAPI(url: string, data: any) {
   return axios(`${BASE_URL}${url}`, {
@@ -66,6 +66,6 @@ export function getConfiguredGroceryDataAPI(data: { emailId: string }) {
   return postAPI("getconfiguredgrocerydata", data);
 }
 export function setCompleteGroceryDataAPI(data: { emailId: string,id:string }) {
-  return postAPI("getconfiguredgrocerydata", data);
+  return postAPI("completegrocerydata", data);
 }
 

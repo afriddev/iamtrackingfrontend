@@ -8,7 +8,7 @@ interface TableInterface {
   keys: string[];
   cellWidth?: string;
   columnIndex?: number | undefined;
-  column?: ReactNode;
+  column?: (data:any)=>ReactNode;
 }
 
 function Table({
@@ -51,7 +51,7 @@ function Table({
                       </div>
                     ) : (columnIndex === 0 || columnIndex) &&
                       index1 === columnIndex ? (
-                      column
+                     column && column(item)
                     ) : (
                       <div className={` flex ${cellWidth}   justify-center `}>
                         <label>{item[key] ?? "-"}</label>

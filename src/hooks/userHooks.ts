@@ -218,9 +218,9 @@ export function useCompleteGrceryData() {
   const { emailId } = useGetMe();
   const { dispatch } = useAppContext();
   const {
-    mutate: getConfigureGroceryData,
+    mutate: setCompleteGroceryData,
     isPending,
-    data: groceryData,
+    data
   } = useMutation({
     mutationFn: ({id}:{id:string}) =>setCompleteGroceryDataAPI({
         emailId: emailId as never,
@@ -235,6 +235,6 @@ export function useCompleteGrceryData() {
       }
     },
   });
-  return { getConfigureGroceryData, isPending, groceryData };
+  return { setCompleteGroceryData, isPending, data };
 }
 
