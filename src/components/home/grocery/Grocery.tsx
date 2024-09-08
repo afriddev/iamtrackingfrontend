@@ -8,6 +8,7 @@ import {
   useGetConfigureGroceryData,
   useCompleteGrceryData,
   useDeleteGrceryData,
+  useGetAndSetUserData,
 } from "@/hooks/userHooks";
 import Spinner from "@/utils/appUtils/Spinner";
 import { useToast } from "@/components/ui/use-toast";
@@ -34,6 +35,7 @@ import Table from "@/utils/appUtils/Table";
 import { IoMdArrowDropup } from "react-icons/io";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { getGroceryColumnData } from "./groceryUtils";
+import { useGetMe } from "@/utils/utils";
 
 function Grocery() {
   const [showDialog, setShowDialog] = useState(false);
@@ -77,6 +79,8 @@ function Grocery() {
 
   const { deleteGroceryData, isPending: deletinggroceryData } =
     useDeleteGrceryData();
+  const { getUserData, isPending: gettingUserData } = useGetAndSetUserData();
+  const { emailId } = useGetMe();
 
   useEffect(() => {
     if (totalGroceryData?.length === 0 && !groceryAPIData?.data) {
@@ -86,6 +90,16 @@ function Grocery() {
       setSelectedGrocerData(totalGroceryData);
     }
   }, [totalGroceryData]);
+
+  useEffect(() => {
+    setSelectedGrocerIndex(0);
+    setSelectedGrocerData(totalGroceryData);
+  }, [
+    totalGroceryData,
+    dailyGroceryData,
+    missedGroceryData,
+    completedroceryData,
+  ]);
 
   function handleClick() {
     setShowDialog(true);
@@ -101,6 +115,7 @@ function Grocery() {
             description: ITEM_ADDED_SUCCESSFULLY,
             variant: "constructive",
           });
+          reset();
           getConfigureGroceryData();
           setShowDialog(false);
         } else {
@@ -159,6 +174,7 @@ function Grocery() {
       {
         onSuccess(data) {
           if (data?.data?.message === "SUCCESS") {
+            reset();
             toast({
               title: "SUCCESS",
               description: REQUEST_SUCCESS,
@@ -166,6 +182,9 @@ function Grocery() {
             });
             getConfigureGroceryData();
             handleSetSelectedGroceryData(0);
+            getUserData({
+              emailId: emailId as never,
+            });
           }
         },
       },
@@ -214,7 +233,9 @@ function Grocery() {
   return (
     <div>
       <Spinner
-        loadingState={isPending || completeData || deletinggroceryData}
+        loadingState={
+          isPending || completeData || deletinggroceryData || gettingUserData
+        }
       />
       <div className="flex w-full items-center justify-between px-2">
         <div
